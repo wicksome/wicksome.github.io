@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wicksome.github.io/"/>
-  <updated>2017-04-23T16:03:17.000Z</updated>
+  <updated>2017-04-23T17:45:02.000Z</updated>
   <id>https://wicksome.github.io/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>flowchart-test</title>
+    <link href="https://wicksome.github.io/2017/04/24/flowchart-test/"/>
+    <id>https://wicksome.github.io/2017/04/24/flowchart-test/</id>
+    <published>2017-04-23T17:44:29.000Z</published>
+    <updated>2017-04-23T17:45:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<div id="flowchart-0" class="flow-chart"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(document.getElementById("flowchart-0-options").value);  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script>]]></content>
+    
+    <summary type="html">
+    
+      &lt;div id=&quot;flowchart-0&quot; class=&quot;flow-chart&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js&quot;&gt;&lt;/script&gt;&lt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
@@ -31,7 +65,21 @@
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(document.getElementById("flowchart-0-options").value);  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script>]]></content>
     
     <summary type="html">
     
