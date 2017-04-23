@@ -2,6 +2,19 @@
 
 
 <div id="sequence-0"></div>
+
+
+<p>test<sub>test</sub><br>test<sup>test</sup><br>test<sup>test</sup><br>test<sub>test</sub><br>basic footnote[^1]<br>here is an inline footnote<a href="inline footnote">^2</a><br>and another one<a href="paragraph">^3</a><br>and another one[^4]</p>
+<p>[^1]: basic footnote content</p>
+<p>footnote<br>content<br>[^4]: footnote content with some <a href="https://en.wikipedia.org/wiki/Markdown" target="_blank" rel="external">markdown</a></p>
+<p>Here is a footnote reference,[<sup>1] and another.[</sup>longnote]</p>
+<p>[^1]: Here is the footnote.</p>
+<p>[^longnote]: Here’s one with multiple blocks.</p>
+<pre><code>Subsequent paragraphs are indented to show that they
+</code></pre><p>belong to the previous footnote.</p>
+<p>basic footnote[^1]<br>here is an inline footnote<a href="inline footnote">^2</a><br>and another one<a href="paragraph">^3</a><br>and another one[^4]</p>
+<p>[^1]: basic footnote content</p>
+<p>footnote<br>content<br>[^4]: footnote content with some <a href="https://en.wikipedia.org/wiki/Markdown" target="_blank" rel="external">markdown</a></p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
 e=>end: End:>http://www.google.com
 op1=>operation: My Operation|past
@@ -18,7 +31,7 @@ cond(no)->sub1(left)->op1
 c2(yes)->io->e
 c2(no)->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"theme":"simple","scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(document.getElementById("flowchart-0-options").value);  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script><textarea id="sequence-0-code" style="display: none">Alice->Bob: Hello Bob, how are you?
 Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!</textarea><textarea id="sequence-0-options" style="display: none">{"theme":"simple","scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(document.getElementById("sequence-0-options").value);  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script></div></article></div></main><footer><div class="paginator"><a href="/2017/04/24/hello-world/" class="prev">PREV</a><a href="/2017/04/24/md-test/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
+Bob-->Alice: I am good thanks!</textarea><textarea id="sequence-0-options" style="display: none">{"theme":"simple","scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(document.getElementById("sequence-0-options").value);  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script></div></article></div></main><footer><div class="paginator"><a href="/2017/04/24/hello-world/" class="prev">上一篇</a><a href="/2017/04/24/md-test/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
 var disqus_identifier = '2017/04/24/flowchart-test/';
 var disqus_title = 'flowchart-test';
 var disqus_url = 'https://wicksome.github.io/2017/04/24/flowchart-test/';

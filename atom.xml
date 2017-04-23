@@ -199,12 +199,25 @@ Third paragraph of definition 2.
     <link href="https://wicksome.github.io/2017/04/24/flowchart-test/"/>
     <id>https://wicksome.github.io/2017/04/24/flowchart-test/</id>
     <published>2017-04-23T17:44:29.000Z</published>
-    <updated>2017-04-23T17:50:31.000Z</updated>
+    <updated>2017-04-23T18:36:34.000Z</updated>
     
     <content type="html"><![CDATA[<div id="flowchart-0" class="flow-chart"></div>
 
 
 <div id="sequence-0"></div>
+
+
+<p>test<sub>test</sub><br>test<sup>test</sup><br>test<sup>test</sup><br>test<sub>test</sub><br>basic footnote[^1]<br>here is an inline footnote<a href="inline footnote">^2</a><br>and another one<a href="paragraph">^3</a><br>and another one[^4]</p>
+<p>[^1]: basic footnote content</p>
+<p>footnote<br>content<br>[^4]: footnote content with some <a href="https://en.wikipedia.org/wiki/Markdown" target="_blank" rel="external">markdown</a></p>
+<p>Here is a footnote reference,[<sup>1] and another.[</sup>longnote]</p>
+<p>[^1]: Here is the footnote.</p>
+<p>[^longnote]: Here’s one with multiple blocks.</p>
+<pre><code>Subsequent paragraphs are indented to show that they
+</code></pre><p>belong to the previous footnote.</p>
+<p>basic footnote[^1]<br>here is an inline footnote<a href="inline footnote">^2</a><br>and another one<a href="paragraph">^3</a><br>and another one[^4]</p>
+<p>[^1]: basic footnote content</p>
+<p>footnote<br>content<br>[^4]: footnote content with some <a href="https://en.wikipedia.org/wiki/Markdown" target="_blank" rel="external">markdown</a></p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start|past:>http://www.google.com[blank]
 e=>end: End:>http://www.google.com
 op1=>operation: My Operation|past
@@ -229,7 +242,9 @@ Bob-->Alice: I am good thanks!</textarea><textarea id="sequence-0-options" style
 
 
 &lt;div id=&quot;sequence-0&quot;&gt;&lt;/div&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/raphael/2.
+
+
+&lt;p&gt;test&lt;sub&gt;test&lt;/sub&gt;&lt;br&gt;test&lt;sup&gt;test&lt;/sup&gt;&lt;br&gt;test&lt;sup&gt;te
     
     </summary>
     
