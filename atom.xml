@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://wicksome.github.io/"/>
+  <link href="https://wickso.me/"/>
   <updated>2017-04-28T10:24:30.000Z</updated>
-  <id>https://wicksome.github.io/</id>
+  <id>https://wickso.me/</id>
   
   <author>
     <name>Yeongjun Kim</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Factory Method Pattern</title>
-    <link href="https://wicksome.github.io/2017/04/26/factory-method-pattern/"/>
-    <id>https://wicksome.github.io/2017/04/26/factory-method-pattern/</id>
+    <link href="https://wickso.me/2017/04/26/factory-method-pattern/"/>
+    <id>https://wickso.me/2017/04/26/factory-method-pattern/</id>
     <published>2017-04-26T04:32:16.000Z</published>
     <updated>2017-04-28T10:24:30.000Z</updated>
     
@@ -107,11 +107,11 @@ Bob-->Alice: I am good thanks!</textarea><textarea id="sequence-0-options" style
     </summary>
     
     
-      <category term="design pattern" scheme="https://wicksome.github.io/tags/design-pattern/"/>
+      <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
     
-      <category term="creational pattern" scheme="https://wicksome.github.io/tags/creational-pattern/"/>
+      <category term="creational pattern" scheme="https://wickso.me/tags/creational-pattern/"/>
     
-      <category term="java" scheme="https://wicksome.github.io/tags/java/"/>
+      <category term="java" scheme="https://wickso.me/tags/java/"/>
     
   </entry>
   
