@@ -76,9 +76,9 @@
     </summary>
     
     
-      <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
-    
       <category term="java" scheme="https://wickso.me/tags/java/"/>
+    
+      <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
     
       <category term="befavioral pattern" scheme="https://wickso.me/tags/befavioral-pattern/"/>
     
@@ -140,11 +140,11 @@
     </summary>
     
     
+      <category term="java" scheme="https://wickso.me/tags/java/"/>
+    
       <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
     
       <category term="creational pattern" scheme="https://wickso.me/tags/creational-pattern/"/>
-    
-      <category term="java" scheme="https://wickso.me/tags/java/"/>
     
   </entry>
   
@@ -620,11 +620,11 @@ System.out.println(name); // &quot;T&quot;
   </entry>
   
   <entry>
-    <title>spring 01</title>
+    <title>spring study 01</title>
     <link href="https://wickso.me/2016/04/07/spring-01/"/>
     <id>https://wickso.me/2016/04/07/spring-01/</id>
     <published>2016-04-06T17:32:16.000Z</published>
-    <updated>2017-05-03T05:35:40.000Z</updated>
+    <updated>2017-05-03T07:45:24.000Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><center><br>    <h2 style="text-align: center;" id="spring-in-action">Spring in Action</h2><br>    <strong>chapter 1</strong><br><br>    스프링 속으로<br></center><br><br><br><div style="text-align: right;"><br>    <p><strong>@date</strong>    2016.04.07</p><br></div><br><br>—<br><br>## readme<br><br>Spring in Action 으로 공부하면서 어려웠던 부분, 기억해야 할 것같은 부분 위주로 정리한 ppt이다. 상단 제목의 번호는 필요할 때 책을 참고하고자 동일하게 적어두었다.<br><br>—<br><br>## 1.1 자바 개발 간소화<br><br>자바 복잡도 간소화를 지원하기 위한 주요 전략<br><br>1. POJO를 이용한 가볍고(lightweight) 비침투적(non-invasive)인 개발<sup><em></em></sup><br>2. DI와 인터페이스 지향(interface orientation)을 통한 느슨한 결합도(loose coupling)<br>3. 애스펙트와 공통 규약을 통한 선언적(declarative) 프로그래밍<br>4. 애스팩트와 템플릿(template)을 통한 반복적인 코드 제거<br><br><small>비침투적 개발이란, 바탕이 되는 기술을 사용하는 클래스, 인터페이스, API 등을 코드에 직접 나타내지 않는 방법으로 복잡함을 분리할 수 있다.</small><br><br>–<br><br>## 1.1.2 종속객체 주입<br><br>- <strong>종속객체 주입(DI, Dependency Injection)</strong><br>- 객체는 종속객체를 생성하거나 얻지 않는다. 즉, 종속객체는 종속객체가 필요한 객체에 주입된다.<br><br>–<br><br>### 1.1.2-1<br><strong>생성자 주입(constructor injection)</strong><br><br>    public class BraveKnight implements Knight {<br>        private Quest quest;<br>        public BraveKnight(Quest quest) { // Quest 주입<br>            this.quest = quest;<br>        }<br>        public void embarkOnQuest() {<br>            quest.embark();<br>        }<br>    }<br><br>–<br><br>### 1.1.2-2<br>BraveNight 테스트<br><br>    public class BraveKnightTest {<br>        @Test<br>        public void knightShouldEmbarkOnQuest() {<br>            Quest mockQuest = mock(Quest.class); // 모의 Quest 생성<br>            BraveKnight knight = new BraveKnight(mockQuest); // 모의 Quest 주입<br>            knight.embarkOnQuest();<br>            verify(mockQuest, time(1)).embark();<br>        }<br>    }<br><br>강한 결합으로 생성자 안에서 quest를 생성할 때는 테스트가 불가능 했지만 DI를 이용하고 테스트가 가능하다. embarkOnQuest()를 호출한 후에 Mockito에게 Quest의 embark()가 정확히 한 번 호출됐는지 확인한다.<br><br>–<br><br>### 1.1.2-3<br><br>    public class SlayDragonQuest implements Quest {<br>        private PrintStream stream;<br>        public SlayDragonQuest(PrintStream stream) {<br>            this.stream = stream;<br>        }<br>        public void embark() {<br>            stream.println(“Embarking on quest to slay the dragon!”);<br>        }<br>    }<br><br>위와 같은 클래스가 있을 때, 어떻게 BraveKnight에게 SlayDragonQuest를 줄 수 있는가? 그리고 어떻게 SlayDragonQuest에게 PrintStrean을 줄 수 있는가?<br><br>–<br><br>### 1.1.2-4<br><strong>와이어링(wiring)</strong>: 애플리케이션 컴포넌트 간의 관계를 정의하는 것(xml or java를 이용한 방법)<br><br>xml<br><br>    &lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>    <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd"><br>        <bean id="knight" class="com.test.knights.BraveKnight"><br>            <constructor-arg ref="quest"> <!-- 빈 주입 --><br>        </constructor-arg></bean><br><br>        <bean id="quest" class="com.test.knights.SlayDragonQuest"> <!-- SlayDragonQuest 생성 --><br>            <constructor-arg value="#{T(System).out}"><br>        </constructor-arg></bean><br>    </beans><br><br>–<br><br>### 1.1.2-5<br>java<br><br>    @Configuration<br>    public class KnightConfig {<br>        @Bean<br>        public Knight knight() {<br>            return new BraveKnight(quest());<br>        }<br><br>        @Bean<br>        public Quest quest() {<br>            return new SlayDragonQuest(System.out);<br>        }<br>    }<br><br>–<br><br>### 1.1.2-6<br><strong>실행해 보기</strong><br><br><strong>application context</strong>은 빈에 관한 정의들을 바탕으로 빈들을 엮어 준다. 스프링 애플리케이션 컨텍스트는 애플리케이션을 구성하는 객체의 생성과 와이어링을 전적으로 책임진다.<br><br>xml: ClassPathXmlApplicationContext()<br><br>java: AnnotationConfigApplicationContext()<br><br>    public static void main(String[] args) {<br>        ClassPathXmlApplicationContext context = // 스프링 컨텍스트 로드<br>            new ClassPathXmlApplicationContext(<br>                    “META-INF/spring/knights.xml”);<br>        Knight k = context.getBean(Knight.class); // 빈 얻기<br>        k.embarkOnQuest(); // 사용<br>        context.close();<br>    }<br><br>–<br><br>## 1.1.3 애스펙트 적용<br>AOP(Aspect-Oriented Programming)은 애플리케이션 전체에 걸쳐 사용되는 기능을 재사용할 수 있는 컴포넌트에 담는다. 즉, 소프트웨어 내부의 관심사들을 서로 분리하는 기술이다. 예를 들어 로깅, 트랜잭션 관리, 보안 등의 시스템 서비스(이렇게 여러 컴포넌트에 관련되는 것을 <em>*횡단 관심사(cross-cutting concerns)</em>라고 한다. 이러한 관심사가 각각의 컴포넌트에 퍼지게 되면 다음과 같은 문제점이 있다.<br><br>1. 관심사를 구현하는 코드가 시스템 전반에 중복되어 걸쳐있어, 변경해야하는 경우 모두 변경해야 한다.<br>2. 컴포넌트의 코드가 본연의 기능과 관련 없응 코드로 지저분해진다.<br><br>–<br><br>### 1.1.3-1<br>AOP를 이용하면 응집도가 높고 본연의 관심사에 집중하는 컴포넌트를 만든다. 즉, 애스펙트는 확실히 POJO를 단순화한다.<br><center><br><img src="http://www.geekmantra.com/staticcontent/contentimages/Spring-Aspect-Oriented1.gif" alt="aspect-exam"><br></center>
@@ -707,9 +707,9 @@ System.out.println(name); // &quot;T&quot;
       <category term="slide" scheme="https://wickso.me/categories/slide/"/>
     
     
-      <category term="java" scheme="https://wickso.me/tags/java/"/>
-    
       <category term="spring" scheme="https://wickso.me/tags/spring/"/>
+    
+      <category term="java" scheme="https://wickso.me/tags/java/"/>
     
   </entry>
   
