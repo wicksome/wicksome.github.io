@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wickso.me/2016/04/07/spring-01/</loc>
+    
+    <lastmod>2017-05-03T05:35:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/md-test/index.html</loc>
+    
+    <lastmod>2017-05-02T13:30:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wickso.me/2017/05/02/template-method-pattern/</loc>
     
     <lastmod>2017-05-02T13:11:13.000Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>https://wickso.me/2017/04/26/factory-method-pattern/</loc>
     
     <lastmod>2017-05-02T05:23:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wickso.me/md-test/index.html</loc>
-    
-    <lastmod>2017-04-28T07:58:28.000Z</lastmod>
     
   </url>
   
