@@ -76,9 +76,9 @@
     </summary>
     
     
-      <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
-    
       <category term="java" scheme="https://wickso.me/tags/java/"/>
+    
+      <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
     
       <category term="befavioral pattern" scheme="https://wickso.me/tags/befavioral-pattern/"/>
     
@@ -140,11 +140,11 @@
     </summary>
     
     
+      <category term="java" scheme="https://wickso.me/tags/java/"/>
+    
       <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
     
       <category term="creational pattern" scheme="https://wickso.me/tags/creational-pattern/"/>
-    
-      <category term="java" scheme="https://wickso.me/tags/java/"/>
     
   </entry>
   
@@ -236,9 +236,9 @@
       <category term="slide" scheme="https://wickso.me/categories/slide/"/>
     
     
-      <category term="java" scheme="https://wickso.me/tags/java/"/>
-    
       <category term="spring" scheme="https://wickso.me/tags/spring/"/>
+    
+      <category term="java" scheme="https://wickso.me/tags/java/"/>
     
   </entry>
   
