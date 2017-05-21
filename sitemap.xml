@@ -2,16 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://wickso.me/2016/04/07/spring-01/</loc>
+    <loc>https://wickso.me/2017/05/02/template-method-pattern/</loc>
     
-    <lastmod>2017-05-03T07:45:24.000Z</lastmod>
+    <lastmod>2017-05-21T10:26:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/03/29/classes-and-interfaces-1/</loc>
+    
+    <lastmod>2017-05-21T10:13:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/03/22/methods-common-to-all-objects-2/</loc>
+    
+    <lastmod>2017-05-21T10:13:05.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/03/11/methods-common-to-all-objects-1/</loc>
+    
+    <lastmod>2017-05-21T10:12:46.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/02/21/creating-and-destroying-objects-3/</loc>
+    
+    <lastmod>2017-05-21T10:12:13.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/02/12/creating-and-destroying-objects-2/</loc>
+    
+    <lastmod>2017-05-21T10:11:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/02/10/creating-and-destroying-objects-1/</loc>
+    
+    <lastmod>2017-05-21T10:11:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/05/16/generics-1/</loc>
+    
+    <lastmod>2017-05-17T05:06:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/05/15/classes-and-interfaces-3/</loc>
+    
+    <lastmod>2017-05-17T03:19:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2017/04/26/factory-method-pattern/</loc>
+    
+    <lastmod>2017-05-04T03:54:14.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://wickso.me/2016/04/12/generic/</loc>
     
-    <lastmod>2017-05-03T07:45:03.000Z</lastmod>
+    <lastmod>2017-05-03T07:57:06.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wickso.me/2016/04/07/spring-01/</loc>
+    
+    <lastmod>2017-05-03T07:45:24.000Z</lastmod>
     
   </url>
   
@@ -23,16 +93,9 @@
   </url>
   
   <url>
-    <loc>https://wickso.me/2017/05/02/template-method-pattern/</loc>
+    <loc>https://wickso.me/2017/04/12/classes-and-interfaces-2/</loc>
     
-    <lastmod>2017-05-02T13:11:13.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wickso.me/2017/04/26/factory-method-pattern/</loc>
-    
-    <lastmod>2017-05-02T05:23:40.000Z</lastmod>
+    <lastmod>2017-04-12T01:00:00.000Z</lastmod>
     
   </url>
   
