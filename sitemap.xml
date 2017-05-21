@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wickso.me/2017/02/10/factory-method-pattern/</loc>
+    
+    <lastmod>2017-05-21T11:45:45.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wickso.me/2017/05/02/template-method-pattern/</loc>
     
     <lastmod>2017-05-21T11:43:15.000Z</lastmod>
@@ -61,13 +68,6 @@
     <loc>https://wickso.me/2017/05/15/classes-and-interfaces-3/</loc>
     
     <lastmod>2017-05-17T03:19:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wickso.me/2017/04/26/factory-method-pattern/</loc>
-    
-    <lastmod>2017-05-04T03:54:14.000Z</lastmod>
     
   </url>
   
