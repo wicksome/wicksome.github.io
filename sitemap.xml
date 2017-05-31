@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wickso.me/2017/05/21/generics-1/</loc>
+    
+    <lastmod>2017-05-31T00:44:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wickso.me/2017/02/10/factory-method-pattern/</loc>
     
     <lastmod>2017-05-21T11:45:45.000Z</lastmod>
@@ -54,13 +61,6 @@
     <loc>https://wickso.me/2017/03/11/methods-common-to-all-objects-1/</loc>
     
     <lastmod>2017-05-21T11:40:53.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wickso.me/2017/05/21/generics-1/</loc>
-    
-    <lastmod>2017-05-21T11:40:09.000Z</lastmod>
     
   </url>
   
