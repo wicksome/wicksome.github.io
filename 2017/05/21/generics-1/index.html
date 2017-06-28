@@ -147,7 +147,9 @@
 </li>
 <li>제네릭은 삭제<sub>erasure</sub> 과정을 통해 구현된다[<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.6" rel="external nofollow noopener noreferrer" target="_blank">JLS, 4.6</a>].</li>
 </ul>
-</div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/05/15/classes-and-interfaces-3/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
+<h4 id="generic-array-creation-오류"><a href="#generic-array-creation-오류" class="headerlink" title="generic array creation 오류"></a>generic array creation 오류</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">new</span> List&lt;E&gt;[]</div><div class="line"><span class="keyword">new</span> List&lt;String&gt;[]</div><div class="line"><span class="keyword">new</span> E[]</div></pre></td></tr></table></figure>
+<p>위 코드는 전부 컴파일되지 않는다. 컴파일하려고 하면 <code>getneric array creation</code> 오류가 발생할 것이다.</p>
+</div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/06/14/generics-2/" class="prev">PREV</a><a href="/2017/05/15/classes-and-interfaces-3/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
 var disqus_identifier = '2017/05/21/generics-1/';
 var disqus_title = '이펙티브자바 5장. 제네릭 - 1';
 var disqus_url = 'https://wickso.me/2017/05/21/generics-1/';
