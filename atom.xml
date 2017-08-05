@@ -120,7 +120,7 @@
     <link href="https://wickso.me/2017/05/21/generics-1/"/>
     <id>https://wickso.me/2017/05/21/generics-1/</id>
     <published>2017-05-21T01:00:00.000Z</published>
-    <updated>2017-06-14T02:56:53.000Z</updated>
+    <updated>2017-08-05T08:26:52.000Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/05/21/generics-1/#23-새-코드에는-무인자-제네릭-자료형을-사용하지-마라">규칙 23</a> - 새 코드에는 무인자 제네릭 자료형을 사용하지 마라<br><a href="../../../../2017/05/21/generics-1/#24-무점검-경고-unchecked-warning-를-제거하라">규칙 24</a> - 무점검 경고(unchecked warning)를 제거하라<br><a href="../../../../2017/05/21/generics-1/#25-배열-대신-리스트를-써라">규칙 25</a> - 배열 대신 리스트를 써라</p>
 <a id="more"></a>
