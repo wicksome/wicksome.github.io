@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 이펙티브자바 7장. 메서드 - 3 · Wicksome Blog</title><meta name="description" content="chapter 7. Methods"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="canonical" href="https://wickso.me/2017/08/13/methods-3/"><link rel="search" type="application/opensearchdescription+xml" href="https://wickso.me/atom.xml" title="Wicksome Blog"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/categories/slide/" target="_self" class="nav-list-link">SLIDE</a></li><li class="nav-list-item"><a href="https://github.com/wicksome" target="_blank" class="nav-list-link" rel="external nofollow noopener noreferrer">GITHUB</a></li><li class="nav-list-item"><a href="https://www.linkedin.com/in/yeongjun/" target="_blank" class="nav-list-link" rel="external nofollow noopener noreferrer">RESUME</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">이펙티브자바 7장. 메서드 - 3</h1><div class="post-info">2017년 8월 13일<ul class="tags"><li><a href="/tags/java/" title="java" class="tag">java </a></li><li><a href="/tags/effective-java/" title="effective java" class="tag">effective java </a></li></ul></div><div class="post-content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/08/13/methods-3/#규칙-43-null-대신-빈-배열이나-컬렉션을-반환하라">규칙 43</a> - null 대신 빈 배열이나 컬렉션을 반환하라<br><a href="../../../../2017/08/13/methods-3/#규칙-44-모든-API-요소에-문서화-주석을-달라">규칙 44</a> - 모든 API 요소에 문서화 주석을 달라</p>
+<a id="more"></a>
+<div class="tip"><br>    <div>아래 책를 참고하여 학습한 내용을 정리/기록한 포스트입니다. 자세한 내용은 책을 참고하시기 바라며, 문제가 있을 경우 연락 부탁드립니다.</div><br>    <ul><br>        <li>조슈아 블로크, 이병준(옮긴이), Effective Java, 2판, 인사이트, 2015.</li><br>    </ul><br></div>
+
+<hr>
+<h2 id="규칙-43-null-대신-빈-배열이나-컬렉션을-반환하라"><a href="#규칙-43-null-대신-빈-배열이나-컬렉션을-반환하라" class="headerlink" title="규칙 43. null 대신 빈 배열이나 컬렉션을 반환하라"></a>규칙 43. null 대신 빈 배열이나 컬렉션을 반환하라</h2><blockquote>
+<p>Null References</p>
+<p><em>“I call it my billion-dollar mistake.”</em> - Tony Hoare</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// as-is</span></div><div class="line"><span class="keyword">if</span> (values != <span class="keyword">null</span> &amp;&amp; Arrays.asList(values).contains(Value.IMAGE)) &#123;&#125;</div><div class="line"><span class="comment">// to-be</span></div><div class="line"><span class="keyword">if</span> (Arrays.asList(values).contains(Value.IMAGE)) &#123;&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>반환값이 null인 경우를 항상 대비해야한다.</li>
+<li>빈 배열이나 컬렉션 대신 null을 반환하는 메서드는 구현하기도 더 까다롭다.</li>
+<li><p>배열 할당 비용을 피할 수 있으니 null을 반환해야 한다?</p>
+<ul>
+<li><p>프로파일링 결과로 해당 메서드가 성능 저하의 주범이라는 것이 밝혀지지 않는 한, 그런 수준까지 성능 걱정을 하는 것은 바람직하지 않다(규칙 55 - 신중하게 최적화하라).</p>
+<blockquote>
+<p><strong>모든 프로그래머가 알아둬야 하는 최적화 관련 격언 세 가지</strong></p>
+<p><em>“맹목적인 어리석음을 비롯한 다른 어떤 이유보다도, 효율성이라는 이름으로 저질러지는 죄악이 더 많다(효율성을 반드시 성취하는 것도 아니면서 말이다).”</em><br>윌리엄 울프(William A. Wulf[Wulf72])</p>
+<p><em>“작은 효율성(small efficiency)에 대해서는, 말하자면 97% 정도에 대해서는, 잊어버려라. 석부른 최적화(premature optimzation)은 모든 악의 근원이다.”</em><br>도널드 커누스(Donald E. Knuth)[Kunth74]</p>
+<p><em>“최적화를 할 때는 아래의 두 규칙을 따르라.</em><br><em>규칙 1: 하지마라.</em><br><em>규칙 2: (전문가들만 따를 것) 아직은 하지 마라 - 완벽히 명료한, 최적화되지 않은 해답을 얻을 때까지는.”</em><br>M. A. 잭슨(M. A. Jackson)[Jackson75]</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>길이가 0인 배열은 변경이 불가능하므로 아무 제약 없이 재사용할 수 있다(규칙 15).</p>
+<blockquote>
+<p><strong>컬렉션에서 배열을 만들어 반환하는 올바른 방법</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> List&lt;Cheese&gt; cheeseInStock = ...;</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Cheese[] EMPTY_CHEESE_ARRAY = <span class="keyword">new</span> Cheese[<span class="number">0</span>];</div><div class="line"><span class="keyword">public</span> Cheese[] getCheese() &#123;</div><div class="line">    <span class="keyword">return</span> cheeseInStock.toArray(EMPTY_CHEESE_ARRAY);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>위 코드에서 <code>toArray()</code>에 전달되는 빈 매열 상수는 반환값의 자료형을 명시하는 구실을 한다. 보통 <code>toArray()</code>는 반환되는 원소가 담길 배열을 스스로 할당하는데, 컬렉션이 비어 있는 경우에는 인자로 주어진 빈 배열을 쓴다. 그리고 인자로 주어진 배열이 컬렉션의 모든 원소를 담을 정도로 큰 경우에는 해당 배열을 반환값으로 사용한다. 따라서 위의 숙어대로 하면 빈 배열은 절대로 자동 할당되지 않는다.</p>
+<p><em>ArrayList.java</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> &lt;T&gt; T[] toArray(T[] a) &#123;</div><div class="line">  <span class="keyword">if</span> (a.length &lt; size)</div><div class="line">    <span class="comment">// Make a new array of a's runtime type, but my contents:</span></div><div class="line">    <span class="keyword">return</span> (T[]) Arrays.copyOf(elementData, size, a.getClass());</div><div class="line">  System.arraycopy(elementData, <span class="number">0</span>, a, <span class="number">0</span>, size);</div><div class="line">  <span class="keyword">if</span> (a.length &gt; size)</div><div class="line">    a[size] = <span class="keyword">null</span>;</div><div class="line">  <span class="keyword">return</span> a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>컬렉션 복사본을 반환하는 올바른 방법</strong></p>
+<p>  컬렉션을 반환하는 메서드도 빈 컬렉션을 반환해야 할 때마다 동일한 변경 불가능 빈 컬렉션 객체를 반환하도록 구현할 수 있다. <code>Collections.emptySet()</code>, <code>Collections.emptyList()</code>, <code>Collections.emptyMap()</code>가 그런 용도로 사용된다.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Cheese&gt; <span class="title">getCheeseList</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (cheeseInSrock.isEmpty()) &#123;</div><div class="line">    <span class="keyword">return</span> Collections.emptyList(); <span class="comment">// 언제나 같은 리스트 반환</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;Cheese&gt;(cheeseInStock);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>null 대신에 빈 배열이나 빈 컬렉션을 반환하자.</strong> null 값을 반환하는 것은 C 언어에서 전해진 관습으로, C에서는 배열의 길이가 배열과 따로 반환된다. 길이 0인 배열을 할당해서 반환하더라도 아무 이득이 없다.</p>
+<hr>
+<h2 id="규칙-44-모든-api-요소에-문서화-주석을-달라"><a href="#규칙-44-모든-API-요소에-문서화-주석을-달라" class="headerlink" title="규칙 44. 모든 API 요소에 문서화 주석을 달라"></a>규칙 44. 모든 API 요소에 문서화 주석을 달라</h2><blockquote>
+<p><strong>좋은 API 문서를 만들려면 API에 포함된 모든 클래스, 인터페이스, 생성자, 메서드, 그리고 필드 선언에 문서화 주석을 달아야 한다.</strong></p>
+</blockquote>
+<ul>
+<li>문서화 주석과 javadoc을 통해 API 문서를 자동으로 만들 수 있다. 문서화 주석 문법은 자바 언어의 일부는 아니지만, 모든 프로그래머가 알아야 하는 실질적인 표준 API다. (<a href="http://www.oracle.com/technetwork/articles/java/index-137868.html" rel="external nofollow noopener noreferrer" target="_blank">How to Write Doc Comments - Oracle 웹사이트</a>)</li>
+</ul>
+<h4 id="공통"><a href="#공통" class="headerlink" title="공통"></a>공통</h4><p><em>List.java</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Returns the hash code value for this list.  The hash code of a list</div><div class="line"> * is defined to be the result of the following calculation:</div><div class="line"> * &lt;pre&gt;&#123;<span class="doctag">@code</span></div><div class="line"> *     int hashCode = 1;</div><div class="line"> *     for (E e : list)</div><div class="line"> *         hashCode = 31*hashCode + (e==null ? 0 : e.hashCode());</div><div class="line"> * &#125;&lt;/pre&gt;</div><div class="line"> * This ensures that &lt;tt&gt;list1.equals(list2)&lt;/tt&gt; implies that</div><div class="line"> * &lt;tt&gt;list1.hashCode()==list2.hashCode()&lt;/tt&gt; for any two lists,</div><div class="line"> * &lt;tt&gt;list1&lt;/tt&gt; and &lt;tt&gt;list2&lt;/tt&gt;, as required by the general</div><div class="line"> * contract of &#123;<span class="doctag">@link</span> Object#hashCode&#125;.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@return</span> the hash code value for this list</div><div class="line"> * <span class="doctag">@see</span> Object#equals(Object)</div><div class="line"> * <span class="doctag">@see</span> #equals(Object)</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure>
+<p><strong>코드는 <code>{@code }</code> 태그를 사용하라.</strong></p>
+<ul>
+<li><p>코드 서체로 표시되도록 한다.</p>
+</li>
+<li><p>태그 안에 포함된 모든 HTML 마크업이나 javadoc 태그가 위력을 발휘하지 못하도록 한다.</p>
+</li>
+<li><p>여러 줄로 나뉜 코드를 문서화 주석에 넣을 때는 <code>{@code }</code> 태그를 HTML <code>&lt;pre&gt;</code> 태그 안에 넣어라.</p>
+</li>
+<li><p><code>&lt;tt&gt;</code>  태그는 HTML5 에서 더이상 지원하지 않는다(고정폭을 보여줘야 할 경우에는 일반적으로 <code>&lt;code&gt;</code> 태그).</p>
+<p><em>\<tt\> - MDN</tt\></em></p>
+<blockquote>
+<p><strong>Obsolete</strong><br>This feature is obsolete. Although it may still work in some browsers, its use is discouraged since it could be removed at any time. Try to avoid using it.</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>주석을 달 때 명심해야 할 일반적 원칙은, 문서화 주석은 소스 코드로 보나 javadoc으로 변환한 결과물로 보나 읽을 만해야 한다는 것이다. 그럴수 없는 상황이라면, javadoc으로 변환한 결과물의 가독성을 우선시하기 바란다.</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * The triangle inequality is &#123;<span class="doctag">@literal</span> |x + y| &lt; |x| + |y|&#125;.</div><div class="line"> ...</div><div class="line"> */</div></pre></td></tr></table></figure>
+<ul>
+<li>HTML 메타문자들을 사용할 때는 <code>{@literal }</code> 태그를 사용하라.</li>
+<li><code>&lt;</code> 기호만 <code>{@literal }</code> 태그로 둘 수도 있었겠지만, 그랬으면 가독성이 떨어졌을 것이다.</li>
+<li><code>{@code }</code> 태그와 유사하지만, 코드 서체로 표시되지 않는 차이가 있다.</li>
+</ul>
+<p><strong>모든 문서화 주석의 첫 번째 “문장”은 해당 주석에 담긴 내용을 요약한 것이다(summary description).</strong></p>
+<ul>
+<li>혼란을 막기 위해, 클래스나 인터페이스의 맴버나 생성자들 가운데 요약문 같은 것은 없어야 한다.</li>
+<li>오버로딩할 경우에는 같은 요약을 쓰는 것이 자연스러울 때가 있으니 주의하라(하지만 문서화 주석의 경우, 동일한 첫 문장은 곤란하다).</li>
+</ul>
+<p><strong>요약문에 마침표가 여러 번 포함되어야 하는 경우에는 주의하라.</strong></p>
+<ul>
+<li><p>javadoc은 뒤에 <em>공백</em>, <em>탭</em>, <em>줄바꿈 문자(line terminator)</em>, <em>블록 태그(block tag)</em>가 오는 첫번째 마침표 위치에서 요약문이 끝나는 것으로 생각한다. 이 문제를 푸는 가장 좋은 방법은, <code>{@literal }</code> 태그로 감싸는 것이다.</p>
+<p><em>example.</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * A college degree, such as B.S., M.S. or Ph.D.</div><div class="line"> * College is a fountain of knowledge where many go to drink.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Degree</span> </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * A college degree, such as B.S., &#123;<span class="doctag">@literal</span> M.S.&#125; or Ph.D.</div><div class="line"> * ...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>엄밀히 따지자면 문서화 주석의 요약문은 첫 번째 “문장”일 필요는 없다. 완벽한 문장일 필요가 없다는 것이다.</strong></p>
+<ul>
+<li><p><strong>메서드나 생성자의 경우,</strong> 요약문은 메서드가 무슨 일을 하는지 기술하는 (객체를 포함하는) 완전한 동사구(verb phrase)여야 한다.</p>
+<p><em>Collection.java - size()</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Returns the number of elements in this collection.  If this collection</div><div class="line"> * contains more than &lt;tt&gt;Integer.MAX_VALUE&lt;/tt&gt; elements, returns</div><div class="line"> * &lt;tt&gt;Integer.MAX_VALUE&lt;/tt&gt;.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@return</span> the number of elements in this collection</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure>
+<p><em>ArrayList.java - Constructor</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Constructs an empty list with the specified initial capacity.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span>  initialCapacity  the initial capacity of the list</div><div class="line"> * <span class="doctag">@throws</span> IllegalArgumentException if the specified initial capacity</div><div class="line"> *         is negative</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>클래스와 인터페이스의 요약문은,</strong> 해당 클래스나 인터페이스로 만들어진 객체가 무엇을 나타내는지를 표현하는 명사구여야 한다.</p>
+<p>   <em>Collection.java</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * The root interface in the &lt;i&gt;collection hierarchy&lt;/i&gt;.  A collection...</div><div class="line"> */</div><div class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>필드의 요약문은,</strong> 필드가 나타내는 것이 무엇인지를 설명하는 명사구여야 한다.</p>
+<p><em>Math.PI</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * The &#123;<span class="doctag">@code</span> double&#125; value that is closer than any other to</div><div class="line"> * &lt;i&gt;pi&lt;/i&gt;, the ratio of the circumference of a circle to its</div><div class="line"> * diameter.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.14159265358979323846</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>javadoc에는 메서드 주석을 “상속”하는 기능이 있다.</strong></p>
+<ul>
+<li><p>적용 가능한 문서화 주석 가운데 가장 근접한 것을 찾는다. 이때 상위 클래스보다는 인터페이스 쪽에 우선권이 주어진다.</p>
+</li>
+<li><p><code>{@inheritDoc }</code> 태그를 사용하면 상위 자료형에 있는 문서화 주석 가운데 일부를 상속할 수도 있다.</p>
+<p><em>ArrayList.java</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* (중간 생략)</div><div class="line">* <span class="doctag">@throws</span> IndexOutOfBoundsException &#123;<span class="doctag">@inheritDoc</span>&#125;</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+<p><em>List.java</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * (중간 생략)</div><div class="line"> * <span class="doctag">@throws</span> IndexOutOfBoundsException if the index is out of range</div><div class="line"> *         (&lt;tt&gt;index &amp;lt; 0 || index &amp;gt;= size()&lt;/tt&gt;)</div><div class="line"> */</div><div class="line"><span class="function">E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>API 관련 별도 문서가 있다면, 문서화 주석에 링크를 남긴다.</strong></p>
+<blockquote>
+<p>  문서화 주석에 관해서, 마지막으로 한 가지 주의사항만 더 살펴보자. 모든 공개 API 요소에는 문서화 주석을 달 필요가 있지만, 항상 그 정도면 충분하지 않다. <strong>관련된 클래스가 많아서 복잡한 API의 경우, API의 전반적인 구조를 설명하는     별도 문서(external document)가 필요한 경우가 많다. 그런 문서가 있다면, 관련 클래스나 패키지의 문서화 주석에는 해당 문서로 연결되는 링크가 있어야 한다.</strong></p>
+</blockquote>
+<h4 id="메서드"><a href="#메서드" class="headerlink" title="메서드"></a>메서드</h4><p><strong>메서드에 대한 문서화 주석은, 메서드와 클라이언트 사이의 규약을 간명하게 설명해야 한다.</strong></p>
+<ul>
+<li>계승을 위해 설계된 메서드가 아니라면(규칙17) 메서드가 <em>어떻게</em>가 아닌 <em>무엇</em>을 하는지를 설명해야 한다.</li>
+<li>해당 메서드의 모든 선행조건(precondition)과 후행조건(postcondition)을 나열해야 한다.<ul>
+<li>선행조건: 메서드를 호출하려면 반드시 참(true)이 되어야 하는 조건들</li>
+<li>후행조건: 메서드 실행이 성공적으로 끝난 다음에 만족되어야 하는 조건들</li>
+</ul>
+</li>
+<li>보통 선행조건은 무결점 예외(unchecked exception)에 대한 <code>@throw</code> 태그를 통해 암묵적으로 기술한다. 관계된 인자의 <code>@param</code> 태그를 통해 명시할 수도 있다.</li>
+</ul>
+<ul>
+<li>메서드는 부작용(side effect)에 대해서도 문서화 해야 한다. 부작용은 후행조건을 만족하기 위해 필요한 것이 아닌, 시스템의 관측 가능한 상태 변화를 일컫는다.</li>
+<li>규칙 70에 설명한 대로, 클래스가 메서드의 스레드 안전성(thread safety)에 대해서도 문서에 남겨야 한다.</li>
+</ul>
+<p><strong>메서드의 규약(contract)을 완벽하게 기술하려면, 문서화 주석에는 인자마다 <code>@param</code> 태그를 달아야 하고, 반환값 자료형이 void 가 아니라면 <code>@return</code> 태그도 달아야 하고, 무점검/점검 여부에 상관없이 모든 예외에는 <code>@throws</code> 태그도 붙어야 한다(규칙 62).</strong></p>
+<p><strong>관습적으로,</strong></p>
+<p><em>List.java</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Removes the element at the specified position in this list (optional</div><div class="line"> * operation).  Shifts any subsequent elements to the left (subtracts one</div><div class="line"> * from their indices).  Returns the element that was removed from the</div><div class="line"> * list.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> index the index of the element to be removed</div><div class="line"> * <span class="doctag">@return</span> the element previously at the specified position</div><div class="line"> * <span class="doctag">@throws</span> UnsupportedOperationException if the &lt;tt&gt;remove&lt;/tt&gt; operation</div><div class="line"> *         is not supported by this list</div><div class="line"> * <span class="doctag">@throws</span> IndexOutOfBoundsException if the index is out of range</div><div class="line"> *         (&lt;tt&gt;index &amp;lt; 0 || index &amp;gt;= size()&lt;/tt&gt;)</div><div class="line"> */</div><div class="line"><span class="function">E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>@param</code> 태그나 <code>@return</code> 태그 다음에는 인자나 반환값을 설명하는 명사구(noun phrase)가 와야 한다.</li>
+<li><code>@throw</code> 태그 다음에는 어떤 조건에서 예외가 발생하는지를 설명하는 if 절이 온다.</li>
+<li>명사구 대신 산술 표현식(arithmetic expression)이 쓰일 때도 있다.</li>
+<li><code>@param</code>, <code>@return</code>, <code>@throws</code> 태그 다음에 오는 구나 절에는 마침표를 찍지 않는다.</li>
+</ul>
+<h4 id="클래스"><a href="#클래스" class="headerlink" title="클래스"></a>클래스</h4><p><strong>클래스가 스레드에 안전하건 그렇지 않건 간에, 그 안전성 수준을 문서로 남겨야 한다(규칙 70).</strong></p>
+<p><strong>직렬화(serialization)가 가능한 클래스라면 직렬화 형식도 밝혀야 한다(규칙 75).</strong></p>
+<p><strong>제네릭 자료형이나 메서드에 주석을 달 때는 모든 자료형 인자들을 설명해야 한다.</strong></p>
+<p><em>Map.java</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * An object that maps keys to values.  A map cannot contain duplicate keys;</div><div class="line"> * each key can map to at most one value.</div><div class="line"> *</div><div class="line"> * (중간 생략)</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> &lt;K&gt; the type of keys maintained by this map</div><div class="line"> * <span class="doctag">@param</span> &lt;V&gt; the type of mapped values</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+<p><strong>enum 자료형에 주석을 달 때는 자료형이나 public 메서드뿐 아니라 상수 각각에도 주석을 달아 주어야 한다.</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 조직 연동에 사용되는 서비스.</div><div class="line"> * 어드민에서 조직연동 API와 같이 내려오는 값도 포함(SSO, IPT)</div><div class="line"> * <span class="doctag">@author</span> yeongjun on 2016. 11. 2.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> OrgSyncType &#123;</div><div class="line">  <span class="comment">/** 조직/구성원의 조직 */</span></div><div class="line">  GROUP,</div><div class="line"></div><div class="line">  <span class="comment">/** 조직/구성원의 구성원 */</span></div><div class="line">  MEMBER,</div><div class="line"></div><div class="line">  <span class="comment">/** 직급/직책 */</span></div><div class="line">  JOB</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>어노테이션 자료형에 주석을 달 때는 자료형뿐 아니라 모든 멤버에도 주석을 달아야 한다.</strong></p>
+<ul>
+<li>멤버에는 필드인 것처럼 명사구 주석을 달아라.</li>
+<li>자료형 요약문에는 동사구를 써서, 언제 이 자료형을 어노테이션으로 붙여야 하는지 설명하라.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 조직연동시 접근제한이 필요한 API라는 것을 명시.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span> yeongjun on 2016. 11. 2.</div><div class="line"> */</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Target</span>(&#123;java.lang.annotation.ElementType.METHOD&#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> OrgSyncUsersDenied &#123;</div><div class="line">  <span class="comment">/**</span></div><div class="line">   * 어노테이션 붙은 메서드가 제한되어야 하는 조직연동 서비스 타입.</div><div class="line">   */</div><div class="line">  OrgSyncType[] value();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>릴리즈 1.5부터는 <em>패키지 수준 문서화 주석(package-level doc comment)</em>은 <code>package-info.java</code>에 두어야 한다.</strong></p>
+<ul>
+<li>패키지 선언 및 패키지 어노테이션을 넣을 수 있다.</li>
+</ul>
+<h4 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h4><ul>
+<li><a href="http://swagger.io/" rel="external nofollow noopener noreferrer" target="_blank">Swagger</a>: API Document을 만들어 주는 툴</li>
+</ul>
+</div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/09/16/general-programming-1/" class="prev">PREV</a><a href="/2017/08/05/enums-and-annotations-1/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
+var disqus_identifier = '2017/08/13/methods-3/';
+var disqus_title = '이펙티브자바 7장. 메서드 - 3';
+var disqus_url = 'https://wickso.me/2017/08/13/methods-3/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//wicksome.disqus.com/count.js" async></script><div class="copyright"><p>© 2017 <a href="https://wickso.me">Yeongjun Kim</a>, powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank" rel="external nofollow noopener noreferrer">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58fee1a404df6aa5"></script><!-- - font awesome--><script src="https://use.fontawesome.com/25a562aa7c.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-43444044-3",'auto');ga('send','pageview');</script></body></html>
