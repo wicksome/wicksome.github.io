@@ -20,7 +20,23 @@
 <li>클래스 기반 프레임워크(class-based framework)에 속한 객체는, 구현 클래스 대신에 보통 abstract인 기반 클래스(base class)로 참조하는 것이 바람직하다(e.g. java.util.TimerTask).</li>
 </ul>
 <hr>
-<h2 id="53-리플렉션-대신-인터페이스를-이용하라"><a href="#53-리플렉션-대신-인터페이스를-이용하라" class="headerlink" title="53. 리플렉션 대신 인터페이스를 이용하라"></a>53. 리플렉션 대신 인터페이스를 이용하라</h2></div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/10/09/general-programming-2/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
+<h2 id="53-리플렉션-대신-인터페이스를-이용하라"><a href="#53-리플렉션-대신-인터페이스를-이용하라" class="headerlink" title="53. 리플렉션 대신 인터페이스를 이용하라"></a>53. 리플렉션 대신 인터페이스를 이용하라</h2><h4 id="리플렉션의-단점"><a href="#리플렉션의-단점" class="headerlink" title="리플렉션의 단점"></a>리플렉션의 단점</h4><ul>
+<li>type checking, exception checking 불가능</li>
+<li>가독성 떨어짐</li>
+<li>성능이 떨어짐</li>
+</ul>
+<h4 id="핵심"><a href="#핵심" class="headerlink" title="핵심"></a>핵심</h4><ul>
+<li>객체 생성은 리플렉션으로 하고 객체 참조는 인터페이스나 상위클래스를 통하라</li>
+<li>일반적인 프로그램은 런타임중에 리플렉션을 통해 객체를 이용하려 하지말아라.</li>
+<li>NoArgsConstructor를 호출할때는 java.lang.relect를 이용할 필요도 없다. Class.newInstance()를 호출하는 것으로 충분하다.</li>
+<li>리플렉션을 아주 제한적으로만 사용하면 오버헤드는 피하면서도 리플렉션의 다양한 장점을 누릴 수 있다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    Class&lt;?&gt; cl = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        cl = Class.forName(args[<span class="number">0</span>]);</div><div class="line">    &#125; <span class="keyword">catch</span>(ClassNotFoundException e) &#123;</div><div class="line">        System.err.println(“Class not found.”);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Set&lt;String&gt; s = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        s = (Set&lt;String&gt;) cl.newInstance();</div><div class="line">    &#125; <span class="keyword">catch</span>(IllegalAccessException | InstantiationException a) &#123;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    s.addAll(Arrays.asList(args).subList(<span class="number">1</span>, args.length));</div><div class="line">    System.out.println(s);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>객체 사용은 인터페이스인 Set을 사용하고, 객체는 리플렉션으로 생성한다.</li>
+<li>Set의 구현체에 따라 정렬을 달리 사용할 수 있다.</li>
+</ul>
+</div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/11/01/general-programming-4/" class="prev">PREV</a><a href="/2017/10/09/general-programming-2/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
 var disqus_identifier = '2017/10/27/general-programming-3/';
 var disqus_title = '이펙티브자바 8장. 일반적인 프로그래밍 원칙들 - 3';
 var disqus_url = 'https://wickso.me/2017/10/27/general-programming-3/';
