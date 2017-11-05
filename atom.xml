@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wickso.me/"/>
-  <updated>2017-11-05T07:32:40.000Z</updated>
+  <updated>2017-11-05T09:00:00.000Z</updated>
   <id>https://wickso.me/</id>
   
   <author>
@@ -14,6 +14,109 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>이펙티브자바 9장. 예외 - 1</title>
+    <link href="https://wickso.me/2017/11/05/exceptions-1/"/>
+    <id>https://wickso.me/2017/11/05/exceptions-1/</id>
+    <published>2017-11-05T09:00:00.000Z</published>
+    <updated>2017-11-05T09:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/11/05/exceptions-1/#57-예외는-예외적-상황에만-사용하라">규칙 57</a> - 예외는 예외적 상황에만 사용하라<br><a href="../../../../2017/11/05/exceptions-1/#58-복구-가능-상태에는-점검지정-예외를-사용하고-프로그래밍-오류에는-실행시점-예외를-이용하라">규칙 58</a> - 복구 가능 상태에는 점검지정 예외를 사용하고, 프로그래밍 오류에는 실행시점 예외를 이용하라<br><a href="../../../../2017/11/05/exceptions-1/#59-불필요한-점검지정-예외-사용은-피하라">규칙 59</a> - 불필요한 점검지정 예외 사용은 피하라</p>
+<a id="more"></a>
+<div class="tip"><br>    <div>아래 책를 참고하여 학습한 내용을 정리/기록한 포스트입니다. 자세한 내용은 책을 참고하시기 바라며, 문제가 있을 경우 연락 부탁드립니다.</div><br>    <ul><br>        <li>조슈아 블로크, 이병준(옮긴이), Effective Java, 2판, 인사이트, 2015.</li><br>    </ul><br></div>
+
+<hr>
+<h2 id="57-예외는-예외적-상황에만-사용하라"><a href="#57-예외는-예외적-상황에만-사용하라" class="headerlink" title="57. 예외는 예외적 상황에만 사용하라"></a>57. 예외는 예외적 상황에만 사용하라</h2><h4 id="예외는-예외적인-상황에만-사용하라-평상시-제어-흐름ordinary-control-flow에-이용해서는-안된다"><a href="#예외는-예외적인-상황에만-사용하라-평상시-제어-흐름-ordinary-control-flow-에-이용해서는-안된다" class="headerlink" title="예외는 예외적인 상황에만 사용하라. 평상시 제어 흐름(ordinary control flow)에 이용해서는 안된다."></a><strong>예외는 예외적인 상황에만 사용하라.</strong> 평상시 제어 흐름(ordinary control flow)에 이용해서는 안된다.</h4><ul>
+<li>예외는 예외적 상황을 위해 고안된 것이기 때문에, JVM을 구현하는 사람 입장에서 보면 명시적 테스트만큼 빠르게 만들 이유가 별로 없다.</li>
+<li>쉽게 이해할 수 있는 표준적인 숙어대로 코딩해야지, 더 좋은 성능을 내 보려고 너무 머리를 많이 굴리면 곤란하다는 것이다.</li>
+<li>너무 머리를 많이 굴린 기법일수록 묘한 버그가 생길 가능성이 높고 유지보수 때문에 골치 아플 일도 많은 법.</li>
+</ul>
+<h4 id="클라이언트에게-제어-흐름의-일부로-예외를-사용하도록-강요하는-api를-만들지-말아라"><a href="#클라이언트에게-제어-흐름의-일부로-예외를-사용하도록-강요하는-API를-만들지-말아라" class="headerlink" title="클라이언트에게 제어 흐름의 일부로 예외를 사용하도록 강요하는 API를 만들지 말아라."></a>클라이언트에게 제어 흐름의 일부로 <strong>예외를 사용하도록 강요하는 API를 만들지 말아라.</strong></h4><ul>
+<li><p>특정한 예측 불가능 조건이 만족될 때만 호출할 수 있는 “상태 종속적(state-dependent)” 메서드를 가진 클래스에는 보통 해당 메서드를 호출해도 되는지를 알기 위한 <strong>“상태 검사(state-testing)”</strong> 메서드가 별도로 갖춰져 있다.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> (Iterator&lt;Foo&gt; i = collection.iterator(); i.hasNext(); ) &#123;</div><div class="line">  Foo foo = i.next();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em><code>i.hasNexe()</code>와 같은 상태 검사 메서드가 없을 경우</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">  Iterator&lt;Foo&gt; i = collection.iterator();</div><div class="line">  <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">    Foo foo = i.next();</div><div class="line">    ...</div><div class="line">  &#125;</div><div class="line">&#125; <span class="keyword">catch</span> (NoSuchElementException e) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>상태 검사 메서드를 제공하기 싫다면 부적절한 상태의 객체에 상태 종속적 메서드를 호출하면 null 같은 <strong>특이값(distinguished value)이 반환</strong>되도록 구현하는 방법도 있다.<br><code>Iterator</code>에서 <code>null</code>은 <code>next()</code>의 정상적 반환값일 수 있기 때문에 사용할 수 없다.</p>
+</li>
+<li><p><strong>특이값 방식</strong></p>
+<p>외부적인 동기화 메커니즘 없이 병렬적으로 사용될 수 있는 객체거나, 외부적인 요인으로 상태 변화가 일어날 수 있는 객체라면 반드시 특이값 방식으로 구현. (상태 검사 메서드를 호출한 다음 상태 종속적 메서드를 호출하기까지의 시간 동안 객체 상태가 변할 수 있기 때문)</p>
+<p>상태 종속적 메서드가 하는 일을 상태 검사 메서드가 중복해서 하는 바람에 성능이 떨어질까 우려될 경우.</p>
+</li>
+<li><p><strong>상태 검사 메서드</strong></p>
+<p>다른 모든 조건이 동일하다면 상태 검사 메서드를 두는 편이 대체로 바람직. 가독성 측면에서도 조금 더 낫고, API를 잘못 이용하는 경우도 쉽게 찾아낼 수 있기 때문.</p>
+<p>상태 검사 메서드를 실수로 호출하지 않으면 상태 종속적 메서드에서 예외가 발생하니까 버그가 분명하게 드러난다.</p>
+<p>실수로 특이값 검사를 생략하는 버그는 찾기 어려울 수 있다.(null 체크를 안할 경우?)</p>
+</li>
+</ul>
+<hr>
+<h2 id="58-복구-가능-상태에는-점검지정-예외를-사용하고-프로그래밍-오류에는-실행시점-예외를-이용하라"><a href="#58-복구-가능-상태에는-점검지정-예외를-사용하고-프로그래밍-오류에는-실행시점-예외를-이용하라" class="headerlink" title="58. 복구 가능 상태에는 점검지정 예외를 사용하고, 프로그래밍 오류에는 실행시점 예외를 이용하라"></a>58. 복구 가능 상태에는 점검지정 예외를 사용하고, 프로그래밍 오류에는 실행시점 예외를 이용하라</h2><p><strong>핵심</strong></p>
+<blockquote>
+<p> 복구 가능한 상태에는 점검지정 예외를 사용하고, 프로그래밍 오류를 나타내고 싶을 때는 실행지점 예외를 사용하라.</p>
+<p> 잘 모르겠다면 무점검 예외를 이용하는 편이 나을 것이다(규칙 59).</p>
+</blockquote>
+<p><strong>Java는 세 가지 종류의 throwable을 제공한다.</strong></p>
+<blockquote>
+<p>점검지정 예외(checked exception), 실행시점 예외(runtime exception), 오류(error)</p>
+</blockquote>
+<p>무엇을 사용해야 하는지 딱 떨어지는 기준이 있는 것은 아니지만, 훌륭한 지침으로 삼을 만한 일반 규칙이 있다.</p>
+<p><strong>호출자(caller) 측에서 복구할 것으로 여겨지는 상황에 대해서는 점검지정 예외를 이용해야 한다.</strong></p>
+<ul>
+<li><p>점검지정 예외를 사용할 것인지 무점검 예외(unchecked exception)를 사용할 것인지에 대한 가장 기본적인 규칙</p>
+</li>
+<li><p>메서드에 선언된 점검지정 예외는 메서드를 호출하면 해당 예외와 관련된 상황이 발생할 수 있음을 API 사용자에게 알리는 구실을 한다.</p>
+<p>API 사용자에게 검점지정 예외를 준다는 것은, 그 상태를 복구할 권한을 준다는 뜻.<br>사용자는 그 권한을 무시할 수 있지만 일반적으로 그렇게 하면 곤란하다(규칙 65, 예외를 무시하지 마라).</p>
+</li>
+<li><p>점검지정 예외는 일반적으로 복구 가능한 상태를 나타내기 때문에, 호출자 측에서 상태를 복구하는 데 이용할 정보를 제공하는 메서드를 갖춰놓는 것이 아주 중요하다.</p>
+</li>
+</ul>
+<p><strong>프로그래밍 오류를 표현할 때는 실행시점 예외를 사용하라.</strong></p>
+<ul>
+<li><p>대부분의 런타임 예외는 선행조건 위반(precondition violation)을 나타낸다.</p>
+<p>클라이언트가 API 명세에 기술된 규악을 지키지 않았다는 뜻. (ArrayIndexOutOfBoundsException)</p>
+</li>
+</ul>
+<p><strong>사용자 정의 무점검 throwable은 RuntimeException의 하위 클래스로 만들어야 한다.</strong></p>
+<ul>
+<li><p>자바 언어 명세에 강제된 사항은 아니지만, 보통 오류(error)는 JVM이 자원 부족이나 불변식 위한 등, 더 이상 프로그램을 실행할 수 없는 상태에 도달했음을 알리기 위해 사용.</p>
+<p>이 관습은 거의 보편적으로 받아들여지고 있어서, Error의 하위 클래스는 새로 만들지 않는 것이 최선이다.</p>
+</li>
+<li><p>예외를 만들 경우, 예외 정보 문자열을 파싱하는 것은 위험한 방법이다(규칙 10). 객체가 어떤 형식의 문자열로 변환되는지 상세히 명시하는 클래스는 별로 없다. 따라서 문자열 변환 결과는 구현마다, 그리고 릴리스마다 달라질 수 있기 때문에 <em>예외를 문자열로 나타낸 결과를 파싱하는 코드는 이식성도 없고 깨지기도 쉽다.</em></p>
+</li>
+</ul>
+<hr>
+<h2 id="59-불필요한-점검지정-예외-사용은-피하라"><a href="#59-불필요한-점검지정-예외-사용은-피하라" class="headerlink" title="59. 불필요한 점검지정 예외 사용은 피하라"></a>59. 불필요한 점검지정 예외 사용은 피하라</h2><p>점검지정 예외는 프로그래머 하여금 예외적인 상황을 처리하도록 장제함으로써 안정성을 높인다.</p>
+<p>아래 경우에 해당하지 않을 경우 무점검 예외를 이용하는 것이 좋다.</p>
+<ul>
+<li>API를 제대로 이용해도 예외 상황이 벌어지는 것을 막을 수 없을 때</li>
+<li>API 사용자가 예외상황에 대한 조치를 취할 수 있을 때</li>
+</ul>
+<p>API 사용자가 이보다 좋은 코드를 만들 수 없다면, 무점검 예외가 적당하다.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">&#125; <span class="keyword">catch</span> (TheCheckedException e) &#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">&#125; <span class="keyword">catch</span> (TheCheckedException e) &#123;</div><div class="line">  e.printStackTrace();</div><div class="line">  System.exit(<span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>메서드가 던지는 예외가 하나뿐일 경우, 점검지정 예외를 없앨 방법이 없을지 고민해보는 것이 좋다.</p>
+<ul>
+<li><p>예외를 던지는 메서드를 둘로 나눠서 첫 번째 메서드가 boolean값을 반환 하도록 만드는 것</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/* as-is */</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">  obj.action(args);</div><div class="line">&#125; <span class="keyword">catch</span> (TheCheckedException e) &#123;</div><div class="line">  <span class="comment">// 예외적 상황 처리</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* to-be: 상태 검사 메서드를 거쳐서 무점검 예외 메서드를 호출 */</span></div><div class="line"><span class="keyword">if</span> (obj.actionPermitted(args)) &#123;</div><div class="line">  obj.action(args);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="comment">// 예외적 상황 처리</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>결과적으로 만들어지는 API는 규칙 57에서 설명한 상태 검사 메서드와 본질적으로 같기 때문에, 동일한 문제를 갖는다.<br>그러므로, 외부적인 동기화 수단 없이 병렬적으로 이용될 가능성이 있는 객체거나, 외부에서 그 상태를 바꿀 가능성이 있는 객체라면 위의 리팩토링 기법은 적용할수 없다.</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;../../../../2017/11/05/exceptions-1/#57-예외는-예외적-상황에만-사용하라&quot;&gt;규칙 57&lt;/a&gt; - 예외는 예외적 상황에만 사용하라&lt;br&gt;&lt;a href=&quot;../../../../2017/11/05/exceptions-1/#58-복구-가능-상태에는-점검지정-예외를-사용하고-프로그래밍-오류에는-실행시점-예외를-이용하라&quot;&gt;규칙 58&lt;/a&gt; - 복구 가능 상태에는 점검지정 예외를 사용하고, 프로그래밍 오류에는 실행시점 예외를 이용하라&lt;br&gt;&lt;a href=&quot;../../../../2017/11/05/exceptions-1/#59-불필요한-점검지정-예외-사용은-피하라&quot;&gt;규칙 59&lt;/a&gt; - 불필요한 점검지정 예외 사용은 피하라&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="https://wickso.me/tags/java/"/>
+    
+      <category term="effective java" scheme="https://wickso.me/tags/effective-java/"/>
+    
+  </entry>
   
   <entry>
     <title>이펙티브자바 8장. 일반적인 프로그래밍 원칙들 - 4</title>
@@ -2415,100 +2518,6 @@ System.out.println(name); // &quot;T&quot;
     
     
       <category term="java" scheme="https://wickso.me/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring study 01</title>
-    <link href="https://wickso.me/2016/04/07/spring-01/"/>
-    <id>https://wickso.me/2016/04/07/spring-01/</id>
-    <published>2016-04-06T17:32:16.000Z</published>
-    <updated>2017-05-03T07:45:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><center><br>    <h2 style="text-align: center;" id="spring-in-action">Spring in Action</h2><br>    <strong>chapter 1</strong><br><br>    스프링 속으로<br></center><br><br><br><div style="text-align: right;"><br>    <p><strong>@date</strong>    2016.04.07</p><br></div><br><br>—<br><br>## readme<br><br>Spring in Action 으로 공부하면서 어려웠던 부분, 기억해야 할 것같은 부분 위주로 정리한 ppt이다. 상단 제목의 번호는 필요할 때 책을 참고하고자 동일하게 적어두었다.<br><br>—<br><br>## 1.1 자바 개발 간소화<br><br>자바 복잡도 간소화를 지원하기 위한 주요 전략<br><br>1. POJO를 이용한 가볍고(lightweight) 비침투적(non-invasive)인 개발<sup><em></em></sup><br>2. DI와 인터페이스 지향(interface orientation)을 통한 느슨한 결합도(loose coupling)<br>3. 애스펙트와 공통 규약을 통한 선언적(declarative) 프로그래밍<br>4. 애스팩트와 템플릿(template)을 통한 반복적인 코드 제거<br><br><small>비침투적 개발이란, 바탕이 되는 기술을 사용하는 클래스, 인터페이스, API 등을 코드에 직접 나타내지 않는 방법으로 복잡함을 분리할 수 있다.</small><br><br>–<br><br>## 1.1.2 종속객체 주입<br><br>- <strong>종속객체 주입(DI, Dependency Injection)</strong><br>- 객체는 종속객체를 생성하거나 얻지 않는다. 즉, 종속객체는 종속객체가 필요한 객체에 주입된다.<br><br>–<br><br>### 1.1.2-1<br><strong>생성자 주입(constructor injection)</strong><br><br>    public class BraveKnight implements Knight {<br>        private Quest quest;<br>        public BraveKnight(Quest quest) { // Quest 주입<br>            this.quest = quest;<br>        }<br>        public void embarkOnQuest() {<br>            quest.embark();<br>        }<br>    }<br><br>–<br><br>### 1.1.2-2<br>BraveNight 테스트<br><br>    public class BraveKnightTest {<br>        @Test<br>        public void knightShouldEmbarkOnQuest() {<br>            Quest mockQuest = mock(Quest.class); // 모의 Quest 생성<br>            BraveKnight knight = new BraveKnight(mockQuest); // 모의 Quest 주입<br>            knight.embarkOnQuest();<br>            verify(mockQuest, time(1)).embark();<br>        }<br>    }<br><br>강한 결합으로 생성자 안에서 quest를 생성할 때는 테스트가 불가능 했지만 DI를 이용하고 테스트가 가능하다. embarkOnQuest()를 호출한 후에 Mockito에게 Quest의 embark()가 정확히 한 번 호출됐는지 확인한다.<br><br>–<br><br>### 1.1.2-3<br><br>    public class SlayDragonQuest implements Quest {<br>        private PrintStream stream;<br>        public SlayDragonQuest(PrintStream stream) {<br>            this.stream = stream;<br>        }<br>        public void embark() {<br>            stream.println(“Embarking on quest to slay the dragon!”);<br>        }<br>    }<br><br>위와 같은 클래스가 있을 때, 어떻게 BraveKnight에게 SlayDragonQuest를 줄 수 있는가? 그리고 어떻게 SlayDragonQuest에게 PrintStrean을 줄 수 있는가?<br><br>–<br><br>### 1.1.2-4<br><strong>와이어링(wiring)</strong>: 애플리케이션 컴포넌트 간의 관계를 정의하는 것(xml or java를 이용한 방법)<br><br>xml<br><br>    &lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>    <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd"><br>        <bean id="knight" class="com.test.knights.BraveKnight"><br>            <constructor-arg ref="quest"> <!-- 빈 주입 --><br>        </constructor-arg></bean><br><br>        <bean id="quest" class="com.test.knights.SlayDragonQuest"> <!-- SlayDragonQuest 생성 --><br>            <constructor-arg value="#{T(System).out}"><br>        </constructor-arg></bean><br>    </beans><br><br>–<br><br>### 1.1.2-5<br>java<br><br>    @Configuration<br>    public class KnightConfig {<br>        @Bean<br>        public Knight knight() {<br>            return new BraveKnight(quest());<br>        }<br><br>        @Bean<br>        public Quest quest() {<br>            return new SlayDragonQuest(System.out);<br>        }<br>    }<br><br>–<br><br>### 1.1.2-6<br><strong>실행해 보기</strong><br><br><strong>application context</strong>은 빈에 관한 정의들을 바탕으로 빈들을 엮어 준다. 스프링 애플리케이션 컨텍스트는 애플리케이션을 구성하는 객체의 생성과 와이어링을 전적으로 책임진다.<br><br>xml: ClassPathXmlApplicationContext()<br><br>java: AnnotationConfigApplicationContext()<br><br>    public static void main(String[] args) {<br>        ClassPathXmlApplicationContext context = // 스프링 컨텍스트 로드<br>            new ClassPathXmlApplicationContext(<br>                    “META-INF/spring/knights.xml”);<br>        Knight k = context.getBean(Knight.class); // 빈 얻기<br>        k.embarkOnQuest(); // 사용<br>        context.close();<br>    }<br><br>–<br><br>## 1.1.3 애스펙트 적용<br>AOP(Aspect-Oriented Programming)은 애플리케이션 전체에 걸쳐 사용되는 기능을 재사용할 수 있는 컴포넌트에 담는다. 즉, 소프트웨어 내부의 관심사들을 서로 분리하는 기술이다. 예를 들어 로깅, 트랜잭션 관리, 보안 등의 시스템 서비스(이렇게 여러 컴포넌트에 관련되는 것을 <em>*횡단 관심사(cross-cutting concerns)</em>라고 한다. 이러한 관심사가 각각의 컴포넌트에 퍼지게 되면 다음과 같은 문제점이 있다.<br><br>1. 관심사를 구현하는 코드가 시스템 전반에 중복되어 걸쳐있어, 변경해야하는 경우 모두 변경해야 한다.<br>2. 컴포넌트의 코드가 본연의 기능과 관련 없응 코드로 지저분해진다.<br><br>–<br><br>### 1.1.3-1<br>AOP를 이용하면 응집도가 높고 본연의 관심사에 집중하는 컴포넌트를 만든다. 즉, 애스펙트는 확실히 POJO를 단순화한다.<br><center><br><img src="http://www.geekmantra.com/staticcontent/contentimages/Spring-Aspect-Oriented1.gif" alt="aspect-exam"><br></center>
-
-<p>–</p>
-<h3 id="113-2"><a href="#1-1-3-2" class="headerlink" title="1.1.3-2"></a>1.1.3-2</h3><p>ex) 기사가 원정전,후에 노래가 울려야 할 경우</p>
-<pre><code>public class BraveKnight implements Knight {
-    ...
-    public void embarkOuest() {
-        sing.beforeQuest(); // 기사가 이것까지 관리해야할까?
-        quest.embark();
-        sing.afterQuest();
-    }
-}
-</code></pre><p>–</p>
-<h3 id="113-3"><a href="#1-1-3-3" class="headerlink" title="1.1.3-3"></a>1.1.3-3</h3><pre><code>&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
-    ...&gt;
-    &lt;bean id=&quot;sing&quot; class=&quot;com.test.Sing&quot;&gt;
-        ...
-    &lt;/bean&gt;
-    &lt;aop:config&gt;
-        &lt;aop:aspect ref=&quot;sing&quot;&gt;
-            &lt;aop:pointcut id=&quot;embark&quot;
-                expression=&quot;execution(* *.embarkOnQuest(..))&quot;/&gt; &lt;!-- 포인트커트 정의 --&gt;
-            &lt;aop:before pointcut-ref=&quot;embark&quot;
-                method=&quot;beforeQuest&quot;/&gt;
-            &lt;aop:after pointcut-ref=&quot;embark&quot;
-                method=&quot;afterQuest&quot;/&gt;
-        &lt;/sop:aspect&gt;
-    &lt;/aop:config&gt;
-&lt;/bean&gt;
-</code></pre><hr>
-<h2 id="12-빈은-담는-그릇-컨테이너"><a href="#1-2-빈은-담는-그릇-컨테이너" class="headerlink" title="1.2 빈은 담는 그릇, 컨테이너"></a>1.2 빈은 담는 그릇, 컨테이너</h2><p>스프링 기반 애플리케이션은 spring container 안에서 객체가 태어나고, 자라고, 소멸한다. 그래서 spring container는 객체를 생성하고, 엮어주고, 이들의 전체 생명주기를 관리한다.</p>
-<p>–</p>
-<h3 id="12-1"><a href="#1-2-1" class="headerlink" title="1.2-1"></a>1.2-1</h3><p>스프링에는 여러 컨테이너 구현체가 존재하며, 이들은 크게 두 가지로 분류된다.</p>
-<ol>
-<li>빈 팩토리(org.springframework.beans.factory.BeanFactory)<ul>
-<li>인터페이스에 의해 정의</li>
-<li>DI에 대한 기본적인 지원을 제공하는 가장 단순한 컨테이너</li>
-</ul>
-</li>
-<li>애플리케이션 컨텍스트(org.springframework.context.ApplicationContext)<ul>
-<li>인터페이스에 의해 정의</li>
-<li>빈 팩토리를 확장해 애플리케이션 프레임워크 서비스를 제공하는 컨테이너</li>
-</ul>
-</li>
-</ol>
-<p>–</p>
-<h3 id="121-애플리케이션-컨텍스트"><a href="#1-2-1-애플리케이션-컨텍스트" class="headerlink" title="1.2.1 애플리케이션 컨텍스트"></a>1.2.1 애플리케이션 컨텍스트</h3><p>애플리케이션의 설정을 제공하기 위한 중앙 인터페이스로, 실행중일땐 읽기만 가능하지만, 실행이 지원되면 리로드될 수 있다.</p>
-<ul>
-<li>AnnotationConfigApplicationContext<br>  <small>하나 이상의 자바 기반 설정 클래스에서 스코프 애플리케이션 컨텍스트를 로드</small></li>
-<li>AnnotationConfigWebApplicationContext<br>  <small>하나 이상의 자바 기반 설정 클래스에서 스프링 웹 애플리케이션 컨텍스트를 로드</small></li>
-<li>ClassPathXmlApplicationContext<br>  <small>클래스패스에 위치한 xml 파일에서 컨텍스트 정의 내용을 로드</small></li>
-<li>FileSystemXmlApplicationContext<br>  <small>파일 경로로 지정된 xml 파일에서 컨텍스트 정의 내용 로드</small></li>
-<li>XmlWebApplicationContext<br>  <small>웹 어플리케이션에 포함된 xml 파일에서 컨텍스트 정의 내용 로드</small></li>
-</ul>
-<p>–</p>
-<h3 id="122-빈의-생명주기"><a href="#1-2-2-빈의-생명주기" class="headerlink" title="1.2.2 빈의 생명주기"></a>1.2.2 빈의 생명주기</h3><center><img src="https://premaseem.files.wordpress.com/2013/02/spring-bean-lifecycle.png" style="border:0px; width:60%; height:60%"></center>
-
-<p>–</p>
-<h3 id="122-1-life-cycle"><a href="#1-2-2-1-life-cycle" class="headerlink" title="1.2.2-1 life-cycle"></a>1.2.2-1 life-cycle</h3><ol>
-<li>스프링이 빈 인스턴스화</li>
-<li>스프링이 값과 빈의 레퍼런스를 빈의 프로퍼티에 주입</li>
-<li>빈이 BeanNameAware를 구현하면 스프링이 빈의 ID를 setBEanName()에 넘김</li>
-<li>빈이 BeanFactoryAware를 구현하면 setBEanFactory() 호출하여 빈팩토리 자체를 넘김</li>
-<li>빈이 ApplicationContextAware를 구현하면 스프링이 setApplicationContext()를 호출하고 둘러싼 애플리케이션컨텍스트에 대한 참조를 넘김</li>
-<li>빈이 BeanPostProcessor 인터페이스를 구현하면 스프링은 postProcessBeforeInitialzation()을 호출</li>
-</ol>
-<p>–</p>
-<h3 id="122-2-life-cycle"><a href="#1-2-2-2-life-cycle" class="headerlink" title="1.2.2-2 life-cycle"></a>1.2.2-2 life-cycle</h3><ol start="7"><br><li>빈이 InitialzingBean 인터페이스를 구현하면 스프링은 afterPropertiesSet() 호출, 빈이 init-method와 함께 선언됐으면 지정한 초기화 메소드가 호출</li><br><li>빈이 BeanPostProcessor를 구현하면 스프링은 postProcessAfterInitialization() 호출</li><br><li>이 상태가 되면 빈은 애플리케이션에서 사용될 준비가 된 것이며, 애플리케이션 컨텍스트가 소멸될 때까지 애플리케이션 컨텍스트에 남아 있다.</li><br><li>빈이 DisposableBean 인터페이스를 구현하면 스프링은 destroy()를 호출한다. 마찬가지고 빈이 destroy-method와 함께 선언됬으면 지정 메소드가 호출</li><br></ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;center&gt;&lt;br&gt;    &lt;h2 style=&quot;text-align: ce
-    
-    </summary>
-    
-      <category term="slide" scheme="https://wickso.me/categories/slide/"/>
-    
-    
-      <category term="java" scheme="https://wickso.me/tags/java/"/>
-    
-      <category term="spring" scheme="https://wickso.me/tags/spring/"/>
     
   </entry>
   
