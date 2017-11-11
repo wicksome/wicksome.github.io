@@ -123,7 +123,7 @@
     <link href="https://wickso.me/2017/11/01/general-programming-4/"/>
     <id>https://wickso.me/2017/11/01/general-programming-4/</id>
     <published>2017-11-01T14:13:00.000Z</published>
-    <updated>2017-11-05T07:32:40.000Z</updated>
+    <updated>2017-11-11T10:39:09.000Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/11/01/general-programming-4/#54-네이티브-메서드는-신중하게-사용하라">규칙 54</a> - 네이티브 메서드는 신중하게 사용하라<br><a href="../../../../2017/11/01/general-programming-4/#55-신중하게-최적화하라">규칙 55</a> - 신중하게 최적화하라<br><a href="../../../../2017/11/01/general-programming-4/#56-일반적으로-통용되는-작명-관습을-따르라라">규칙 56</a> - 일반적으로 통용되는 작명 관습을 따르라</p>
 <a id="more"></a>
@@ -181,7 +181,71 @@
 </li>
 </ul>
 <hr>
-<h2 id="56-일반적으로-통용되는-작명-관습을-따르라"><a href="#56-일반적으로-통용되는-작명-관습을-따르라" class="headerlink" title="56. 일반적으로 통용되는 작명 관습을 따르라"></a>56. 일반적으로 통용되는 작명 관습을 따르라</h2>]]></content>
+<h2 id="56-일반적으로-통용되는-작명-관습을-따르라"><a href="#56-일반적으로-통용되는-작명-관습을-따르라" class="headerlink" title="56. 일반적으로 통용되는 작명 관습을 따르라"></a>56. 일반적으로 통용되는 작명 관습을 따르라</h2><blockquote>
+<p>The Java Language Specification[JSL, 6.8]에도 언급되어 있듯이, 작명 관습이 잘 정립되어 있다.</p>
+</blockquote>
+<h4 id="철자"><a href="#철자" class="headerlink" title="철자"></a>철자</h4><p><strong>Package</strong></p>
+<ul>
+<li>알파벳 소문자</li>
+<li>숫자는 거의 사용하지 않음</li>
+<li>인터넷 도메인으로 시작(예외적으로, 표준 라이브러리와 그 옵션 패키지 명은 java와 javax로 시작)</li>
+<li>패키지명 컴포넌트는 짧아야하며, 보통 8문자 이하도 만듦(하나의 단어 또는 약어)</li>
+<li>의미가 확실한 약어 활용(e.g. utilities -&gt; util)</li>
+</ul>
+<p><strong>Enum, Annotation, Class, Interface</strong></p>
+<ul>
+<li>하나 이상의 단어</li>
+<li>첫글자 대문자</li>
+<li>널리 쓰는 약어(e.g. max, min)외에 다른 약어는 사용을 피함</li>
+</ul>
+<p><strong>Method, Field</strong></p>
+<ul>
+<li>Class와 규칙 같음, 다만 첫글자 소문자</li>
+<li>상수는 대문자와 단어 사이에 <code>_</code></li>
+</ul>
+<p><strong>Local variable</strong></p>
+<ul>
+<li>Filed와 동일</li>
+<li>약어 허용</li>
+</ul>
+<p><strong>Generic type</strong></p>
+<ul>
+<li>대문자</li>
+<li>임의 자료형: <code>T</code></li>
+<li>컬렉션의 요소 자료형: <code>E</code></li>
+<li>맵의 키와 값: <code>K</code>, ‘V’</li>
+<li>예외: <code>X</code></li>
+<li>임의 자료형이 연속되는 경우: <code>T</code>, <code>U</code>, <code>V</code> 혹은 <code>T1</code>, <code>T2</code>, <code>T3</code></li>
+</ul>
+<h4 id="문법"><a href="#문법" class="headerlink" title="문법"></a>문법</h4><p><strong>Package</strong></p>
+<ul>
+<li>굳이 없음</li>
+</ul>
+<p><strong>Enum, Class</strong></p>
+<ul>
+<li>단수형의 명사, 명사구</li>
+</ul>
+<p><strong>Interface</strong></p>
+<ul>
+<li>Class와 동일</li>
+<li><code>-able</code>, <code>-ible</code> 같은 형용사격 어미가 붙기도 함(e.g. <code>Runnable</code>, <code>Iterable</code>)</li>
+</ul>
+<p><strong>Annotation</strong></p>
+<ul>
+<li>명사, 동사, 전치사, 형용사 어느것이나 널리 사용</li>
+</ul>
+<p><strong>Method</strong></p>
+<ul>
+<li>동사, 동사구(e.g. <code>append</code>)</li>
+<li>boolean을 반환하는 메서드는 보통 <code>is-</code>, (드물게)<code>has-</code>(e.g. <code>isEmpty</code>, <code>isDigit</code>)</li>
+<li>기능이나 객체 속성을 반환하는 메서드는 명사, 명사구, <code>get-</code>(e.g. <code>size()</code>, <code>hasCode</code>)</li>
+<li>Bean 클래스에 속한 메서드는 getter(<code>get-</code>), setter(<code>set-</code>)</li>
+<li>객체의 자료형을 반환하거나 다른 자료형의 독립적 객체는 반환하는 경우 <code>toType</code>(e.g. <code>toString</code>, <code>toArray</code>)</li>
+<li>인자로 전달받은 객체와 다른 다료형의 뷰(view) 객체를 반환하는 메서드의 경우 <code>asType</code>(e.g. <code>asList</code>)</li>
+<li>호출 대상 각체와 동일한 기본 자료형 값을 반환하는 메서드의 경우 <code>typeValue</code>(e.g. <code>intValue</code>)</li>
+<li>정적 팩터리 메서드는 <code>valueOf</code>, <code>of</code>, <code>getInstance</code>, <code>newInstance</code>, <code>getType</code>, <code>newType</code></li>
+</ul>
+]]></content>
     
     <summary type="html">
     
