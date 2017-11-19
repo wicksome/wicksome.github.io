@@ -37,7 +37,7 @@
 <p>점검지정 예외(checked exception), 실행시점 예외(runtime exception), 오류(error)</p>
 </blockquote>
 <p>무엇을 사용해야 하는지 딱 떨어지는 기준이 있는 것은 아니지만, 훌륭한 지침으로 삼을 만한 일반 규칙이 있다.</p>
-<p><strong>호출자(caller) 측에서 복구할 것으로 여겨지는 상황에 대해서는 점검지정 예외를 이용해야 한다.</strong></p>
+<p><strong>호출자(caller) 측에서 복구할 것으로 여겨지는 상황에 대해서는 <em>점검지정 예외</em>를 이용해야 한다.</strong></p>
 <ul>
 <li><p>점검지정 예외를 사용할 것인지 무점검 예외(unchecked exception)를 사용할 것인지에 대한 가장 기본적인 규칙</p>
 </li>
@@ -47,10 +47,10 @@
 <li><p>점검지정 예외는 일반적으로 복구 가능한 상태를 나타내기 때문에, 호출자 측에서 상태를 복구하는 데 이용할 정보를 제공하는 메서드를 갖춰놓는 것이 아주 중요하다.</p>
 </li>
 </ul>
-<p><strong>프로그래밍 오류를 표현할 때는 실행시점 예외를 사용하라.</strong></p>
+<p><strong>프로그래밍 오류를 표현할 때는 <em>실행시점 예외</em>를 사용하라.</strong></p>
 <ul>
 <li><p>대부분의 런타임 예외는 선행조건 위반(precondition violation)을 나타낸다.</p>
-<p>클라이언트가 API 명세에 기술된 규악을 지키지 않았다는 뜻. (ArrayIndexOutOfBoundsException)</p>
+<p>클라이언트가 API 명세에 기술된 규악을 지키지 않았다는 뜻. (e.g. <code>ArrayIndexOutOfBoundsException</code>)</p>
 </li>
 </ul>
 <p><strong>사용자 정의 무점검 throwable은 RuntimeException의 하위 클래스로 만들어야 한다.</strong></p>
@@ -76,10 +76,10 @@
 <li><p>예외를 던지는 메서드를 둘로 나눠서 첫 번째 메서드가 boolean값을 반환 하도록 만드는 것</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/* as-is */</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">  obj.action(args);</div><div class="line">&#125; <span class="keyword">catch</span> (TheCheckedException e) &#123;</div><div class="line">  <span class="comment">// 예외적 상황 처리</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* to-be: 상태 검사 메서드를 거쳐서 무점검 예외 메서드를 호출 */</span></div><div class="line"><span class="keyword">if</span> (obj.actionPermitted(args)) &#123;</div><div class="line">  obj.action(args);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="comment">// 예외적 상황 처리</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>결과적으로 만들어지는 API는 규칙 57에서 설명한 상태 검사 메서드와 본질적으로 같기 때문에, 동일한 문제를 갖는다.<br>그러므로, 외부적인 동기화 수단 없이 병렬적으로 이용될 가능성이 있는 객체거나, 외부에서 그 상태를 바꿀 가능성이 있는 객체라면 위의 리팩토링 기법은 적용할수 없다.</p>
+<li><p>결과적으로 만들어지는 API는 규칙 57에서 설명한 상태 검사 메서드와 본질적으로 같기 때문에, 동일한 문제를 갖는다.<br>그러므로, 외부적인 동기화 수단 없이 병렬적으로 이용될 가능성이 있는 객체거나, 외부에서 그 상태를 바꿀 가능성이 있는 객체라면 위의 리팩토링 기법은 적용할 수 없다.</p>
 </li>
 </ul>
-</div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/11/01/general-programming-4/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
+</div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/11/19/exceptions-2/" class="prev">PREV</a><a href="/2017/11/01/general-programming-4/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
 var disqus_identifier = '2017/11/05/exceptions-1/';
 var disqus_title = '이펙티브자바 9장. 예외 - 1';
 var disqus_url = 'https://wickso.me/2017/11/05/exceptions-1/';
