@@ -5,6 +5,40 @@
 </blockquote>
 <p>이번에 서버를 새로 받으면서 버전업도 하고 설치 순서도 다시 정리해보려한다. 소나큐브란 코드 중복, 유닛 테스트, 복잡고, 코딩 규칙, 취약점등 프로젝트의 품질을 관리할 수 있는 정적 분석 도구이다. 소나큐브에 대한 자세한 내용은 <a href="https://docs.sonarqube.org/display/SONAR/Documentation" rel="external nofollow noopener noreferrer" target="_blank">문서</a>를 참고하자. 공식적이진 않지만, <a href="https://sonarqubekr.atlassian.net/wiki/spaces/SON/overview" rel="external nofollow noopener noreferrer" target="_blank">한국어 문서</a>도 정말 잘 되어 있다👍</p>
 <a id="more"></a>
+<p><strong>Feature</strong></p>
+<ul>
+<li>정적 분석 툴(CheckStyle, FindBugs, PMD, …)을 Plug‑in으로 제공</li>
+<li>각종 Plug‑in의 결과를 통합해서 직관적인 UI의 Dashboard로 확인</li>
+<li>코드 품질 지표를 실시간으로 확인</li>
+<li>webhook 제공</li>
+<li>프로젝트를 한눈에 보기(관리자를 위한 도구?)</li>
+<li>보안성: <a href="https://docs.sonarqube.org/display/SONAR/Security‑related+rules" rel="external nofollow noopener noreferrer" target="_blank">https://docs.sonarqube.org/display/SONAR/Security‑related+rules</a></li>
+</ul>
+<p><strong>정적분석을 통해 발견되는 결함</strong></p>
+<ul>
+<li>정의되지 않은 값으로 변수 참조</li>
+<li>모듈과 컴포넌트 간에 일관되지 않은 인터페이스</li>
+<li>사용되지 않는 변수</li>
+<li>사용되지 않는 코드 (Dead Code)</li>
+<li>코딩 표준 위반</li>
+<li>보안 취약성</li>
+<li>코드와 소프트웨어 모델의 syntax 위반</li>
+</ul>
+<p><strong>Structure</strong></p>
+<p><img src="https://docs.sonarqube.org/download/attachments/6961766/SQArchitecture5.5.png?version=1&amp;modificationDate=1459863102000&amp;api=v2" alt="SonarQube Structure"></p>
+<p><a href="https://docs.sonarqube.org/display/SONARQUBE56/Architecture+and+Integration" rel="external nofollow noopener noreferrer" target="_blank">https://docs.sonarqube.org/display/SONARQUBE56/Architecture+and+Integration</a></p>
+<p><strong>Work Flow</strong></p>
+<p><img src="https://docs.sonarqube.org/download/attachments/6961766/SQ55Integration.png?version=1&amp;modificationDate=1459863190000&amp;api=v2" alt="workflow"></p>
+<ul>
+<li>SonarQube: 분석 결과 관리</li>
+<li>SonarQube Scanner: 코드 분석<ul>
+<li>CheckStyle: 코딩 룰을 잘 따르고 있는지 분석</li>
+<li>FindBugs: 잠재적인 에러 타입 검사</li>
+<li>PMD: 미사용 변수, 비어있는 코드 블락, 불필요한 오브젝트 생성과 같은 Defect을 유발할 수 있는 코드를 검사</li>
+<li>Junit</li>
+</ul>
+</li>
+</ul>
 <h2 id="requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><blockquote>
 <p><a href="https://docs.sonarqube.org/display/SONAR/Requirements" rel="external nofollow noopener noreferrer" target="_blank">https://docs.sonarqube.org/display/SONAR/Requirements</a></p>
 </blockquote>
@@ -35,8 +69,24 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">sonar.jdbc.username=sonar</div><div class="line">sonar.jdbc.password=sonar</div><div class="line">...</div><div class="line">sonar.jdbc.url=jdbc:mysql://localhost:13306/sonarqube?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance</div><div class="line">...</div><div class="line">sonar.web.host=10.111.111.11</div><div class="line">sonar.web.port=15001</div></pre></td></tr></table></figure>
 <h4 id="run-sonarqube"><a href="#Run-SonarQube" class="headerlink" title="Run SonarQube"></a>Run SonarQube</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ cd ~/apps/sonarqube/bin/linux-x86-64</div><div class="line">$ ./sonar.sh start</div></pre></td></tr></table></figure>
 <h2 id="result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p><img src="https://user-images.githubusercontent.com/5036939/34835783-3777b054-f739-11e7-8d12-8272cd67b1ea.png" alt="works sonarqube"></p>
-<p>도입하기 전에는 IntelliJ에 <a href="http://findbugs.sourceforge.net/" rel="external nofollow noopener noreferrer" target="_blank">FindBug</a>, <a href="http://checkstyle.sourceforge.net/" rel="external nofollow noopener noreferrer" target="_blank">Checkstyle</a>, <a href="http://junit.org/" rel="external nofollow noopener noreferrer" target="_blank">JUnit</a> 따로따로 실행하고 확인했었는데, <a href="https://github.com/sonar-intellij-plugin/sonar-intellij-plugin" rel="external nofollow noopener noreferrer" target="_blank">SonarQube IntelliJ Community Plugin</a>을 통해 한번에 확인 가능하고, 주니어 입장에서 코드 한줄한줄 리뷰 받는 느낌이다..</p>
 <p>(DNS, SSL 설정, 사내 링크, 각종 셋팅을 모두 지우고나니 명령어 몇개 밖에 없고, 이게 가이드인지..😱)</p>
+<p>도입하기 전에는 IntelliJ에 <a href="http://findbugs.sourceforge.net/" rel="external nofollow noopener noreferrer" target="_blank">FindBug</a>, <a href="http://checkstyle.sourceforge.net/" rel="external nofollow noopener noreferrer" target="_blank">Checkstyle</a>, <a href="http://junit.org/" rel="external nofollow noopener noreferrer" target="_blank">JUnit</a> 따로따로 실행하고 확인했었는데, <a href="https://github.com/sonar-intellij-plugin/sonar-intellij-plugin" rel="external nofollow noopener noreferrer" target="_blank">SonarQube IntelliJ Community Plugin</a>을 통해 한번에 확인 가능하고, 주니어 입장에서 코드 한줄한줄 리뷰 받는 느낌이다..</p>
+<p>앞으로 SonarQube를 통해서… QP(Quality Practice: 소스코드의 정적 분석 결과, 코드 복잡도, 코드 커버리지 개선을 통해 소프트웨어 품질을 높이는 활동)를 신경써보자. 마지막으로 와닿은 말(<a href="https://prezi.com/rv_ce5akpvq6/quality-practice/" rel="external nofollow noopener noreferrer" target="_blank">참고</a>)..</p>
+<ul>
+<li>QP 활동은 개발자 부담을 늘리기 위한 것이 아닙니다.</li>
+<li>QP 도구를 활용해 문제를 사전에 발견해 조치할 수 있습니다.</li>
+<li>QP 지수를 통해 현재 품질 상태를 파악할 수 있습니다.</li>
+<li>QP를 통해 좋은 품질의 소프트웨어를 만듭시다.</li>
+</ul>
+<blockquote>
+<p><strong>나중은 결코 오지 않는다 ‑ 르블랑의법칙</strong></p>
+</blockquote>
+<h2 id="references"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="http://moseskim.github.io/sonarqube/2016/04/18/stop‑planning‑fix‑the‑leak.html" rel="external nofollow noopener noreferrer" target="_blank">http://moseskim.github.io/sonarqube/2016/04/18/stop‑planning‑fix‑the‑leak.html</a></li>
+<li>SonarQube in Action PDF ‑ <a href="http://dl.finebook.ir/book/6d/12427.pdf" rel="external nofollow noopener noreferrer" target="_blank">http://dl.finebook.ir/book/6d/12427.pdf</a></li>
+<li>SonarQube를 이용한 지속적인 품질 관리 ‑ <a href="http://www.nextree.co.kr/p2963/NHN" rel="external nofollow noopener noreferrer" target="_blank">http://www.nextree.co.kr/p2963/NHN</a></li>
+<li><a href="https://www.sw.or.kr/ftp/conference/3_주제_3_Quality Practice 적용사례_NHN.pdf" rel="external nofollow noopener noreferrer" target="_blank">Quality Practice 적용 사례</a></li>
+</ul>
 </div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2017/12/28/exceptions-3/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
 var disqus_identifier = '2018/01/12/sonarqube-install/';
 var disqus_title = 'SonarQube 설치';
