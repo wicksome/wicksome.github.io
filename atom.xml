@@ -782,11 +782,11 @@
   </entry>
   
   <entry>
-    <title>이펙티브자바 7장. 메서드 - 2(WIP)</title>
+    <title>이펙티브자바 7장. 메서드 - 2</title>
     <link href="https://wickso.me/2017/08/12/methods-2/"/>
     <id>https://wickso.me/2017/08/12/methods-2/</id>
     <published>2017-08-12T02:00:00.000Z</published>
-    <updated>2018-01-11T15:54:21.000Z</updated>
+    <updated>2018-01-11T15:55:52.000Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/08/12/methods-2/#규칙-41-오버로딩할-때는-주의하라">규칙 41</a> - 오버로딩할 때는 주의하라<br><a href="../../../../2017/08/12/methods-2/#규칙-42-varargs는-신중히-사용하라">규칙 42</a> - varargs는 신중히 사용하라</p>
 <a id="more"></a>
@@ -867,11 +867,11 @@
   </entry>
   
   <entry>
-    <title>이펙티브자바 7장. 메서드 - 1(WIP)</title>
+    <title>이펙티브자바 7장. 메서드 - 1</title>
     <link href="https://wickso.me/2017/08/12/methods-1/"/>
     <id>https://wickso.me/2017/08/12/methods-1/</id>
     <published>2017-08-12T01:00:00.000Z</published>
-    <updated>2018-01-11T15:47:12.000Z</updated>
+    <updated>2018-01-11T15:55:47.000Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/08/12/methods-1/#규칙-38-인자의-유효성을-검사하라">규칙 38</a> - 인자의 유효성을 검사하라<br><a href="../../../../2017/08/12/methods-1/#규칙-39-필요하다면-방어적-복사본을-만들라">규칙 39</a> - 필요하다면 방어적 복사본을 만들라<br><a href="../../../../2017/08/12/methods-1/#규칙-40-메서드-시그니처는-신중하게-설계하라">규칙 40</a> - 메서드 시그니처는 신중하게 설계하라</p>
 <a id="more"></a>
