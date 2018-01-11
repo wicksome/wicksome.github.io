@@ -782,6 +782,102 @@
   </entry>
   
   <entry>
+    <title>이펙티브자바 7장. 메서드 - 1(WIP)</title>
+    <link href="https://wickso.me/2017/08/12/methods-1/"/>
+    <id>https://wickso.me/2017/08/12/methods-1/</id>
+    <published>2017-08-12T01:00:00.000Z</published>
+    <updated>2018-01-11T15:47:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/08/12/methods-1/#규칙-38-인자의-유효성을-검사하라">규칙 38</a> - 인자의 유효성을 검사하라<br><a href="../../../../2017/08/12/methods-1/#규칙-39-필요하다면-방어적-복사본을-만들라">규칙 39</a> - 필요하다면 방어적 복사본을 만들라<br><a href="../../../../2017/08/12/methods-1/#규칙-40-메서드-시그니처는-신중하게-설계하라">규칙 40</a> - 메서드 시그니처는 신중하게 설계하라</p>
+<a id="more"></a>
+<div class="tip"><br>    <div>아래 책를 참고하여 학습한 내용을 정리/기록한 포스트입니다. 자세한 내용은 책을 참고하시기 바라며, 문제가 있을 경우 연락 부탁드립니다.</div><br>    <ul><br>        <li>조슈아 블로크, 이병준(옮긴이), Effective Java, 2판, 인사이트, 2015.</li><br>    </ul><br></div>
+
+<hr>
+<h2 id="규칙-38-인자의-유효성을-검사하라"><a href="#규칙-38-인자의-유효성을-검사하라" class="headerlink" title="규칙 38. 인자의 유효성을 검사하라"></a>규칙 38. 인자의 유효성을 검사하라</h2><blockquote>
+<p><strong>요약</strong></p>
+<ul>
+<li>메서드나 생성자를 구현할 때 받을 수 있는 인자에 제한이 있는지 따져볼 것</li>
+<li>제한이 있다면 문서에 남기고, 메서드 앞부분에서 검사</li>
+</ul>
+</blockquote>
+<p>invalid 인자가 전달되어도, 메서드 앞부분에서 인자 유효성 검사를 하면 적정한 예외를 통해 깔끔하고 신속하게 오류를 검출할수 있다. 그렇지 않으면 처리 도중에 이상한 예외를 내면서 죽거나, 제대로 실행하는 것 같은데 잘못된 결과가 나오거나, 다른 값에 영향을 주거나, 아무 상관 없는 부분에서 오류가 발생하는데 그 시간과 위치를 프로그램을 실행할 때마다 다를 수도 있다.</p>
+<p>public 메서드라면 인자 유효성이 위반되었을 경우에 발생하는 예외를 javadoc의 @throws 태그를 사용해서 문서화하라(규칙 62).</p>
+<p>public이 아닌 메서드는 일반적으로 인자 유효성을 검사할 때 assertion을 이용한다.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">long</span> a[], <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> </span>&#123;</div><div class="line">    <span class="keyword">assert</span> a != <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">assert</span> offset &gt;= <span class="number">0</span> &amp;&amp; offset &lt;= a.length;</div><div class="line">    <span class="keyword">assert</span> length &gt;= <span class="number">0</span> &amp;&amp; length &lt;= a.length - offset;</div><div class="line">    ... <span class="comment">// 계산 수행</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>assertion은 클라이언트가 패키지를 어떻게 이용하던 확증 조건(asserted condition)은 항상 참이 되어야 한다고 주장하는 것</li>
+<li>통상적인 유효성 검사와는 달리, 확증문은 확증 조건이 만족되지 않으면 AssertionError를 발생.</li>
+<li>통상의 유효성 검사와는 달리, 활성화되지 않은 확증문은 실행되지 않으므로 비용이 0이다.</li>
+<li>확증문을 활성화시키려면 java 인터프리터에 -ea(-enableassertions) 옵션을 주어야 한다.</li>
+</ul>
+<hr>
+<h2 id="규칙-39-필요하다면-방어적-복사본을-만들라"><a href="#규칙-39-필요하다면-방어적-복사본을-만들라" class="headerlink" title="규칙 39. 필요하다면 방어적 복사본을 만들라"></a>규칙 39. 필요하다면 방어적 복사본을 만들라</h2><ul>
+<li>만드는 클래스의 클라이언트가 불변식을 망가뜨리기 위해 최선을 다할 것이라는 가정하에, 방어적 프로그래밍해야 한다.</li>
+<li>객체 내부를 보호하려면 생성자로 전달되는 변경 가능 객체를 반드시 방어적으로 복사한다.</li>
+<li>접근자는 내부 필드에 대한 방어적 복사본을 반환하도록 한다.</li>
+<li>객체의 컴포넌트로는 가능하다면 변경 불가능 객체를 사용하라.</li>
+<li>오버헤그가 크거나, 사용자가 부적절하게 사용하지 않는다는 보장이 있을 때는, 문서에 명시하고 넘어갈 수 있다.</li>
+</ul>
+<hr>
+<h2 id="규칙-40-메서드-시그니처는-신중하게-설계하라"><a href="#규칙-40-메서드-시그니처는-신중하게-설계하라" class="headerlink" title="규칙 40. 메서드 시그니처는 신중하게 설계하라"></a>규칙 40. 메서드 시그니처는 신중하게 설계하라</h2><p>API 설계할 때 참고하면 좋은 팁, 잘 적용하면 배우기도 쉽고 사용하기도 쉽고 오류가 날 가능성도 적은 API를 만드는데 도움이 될 것</p>
+<h4 id="메서드-이름은-신중하게-고르라"><a href="#메서드-이름은-신중하게-고르라" class="headerlink" title="메서드 이름은 신중하게 고르라."></a>메서드 이름은 신중하게 고르라.</h4><ul>
+<li>모든 이름은 표준 작명 관습(standard naming convention)을 따아야 한다(규칙 56).</li>
+<li>최우선 목표는 이해하기 쉬우면서도 같은 패키지 안의 다른 이름들과 일관성이 유지되는 이름으로 선택</li>
+<li>좀 더 널리 합의된 사항에도 부합하는 이름으로 고를 것, 자바 라이브러리 확인</li>
+</ul>
+<h4 id="편의-메서드convenience-method를-제공하는데-너무-열-올리지-마라"><a href="#편의-메서드-convenience-method-를-제공하는데-너무-열-올리지-마라" class="headerlink" title="편의 메서드(convenience method)를 제공하는데 너무 열 올리지 마라."></a>편의 메서드(convenience method)를 제공하는데 너무 열 올리지 마라.</h4><ul>
+<li>모든 메서드는 “맡은 일이 명확하고 거기 충실해야(pull its weight)” 한다.</li>
+<li>클래스에 너무 메서드가 많으면 학습, 사용, 테스트, 유지보수 등의 모든 측면에서 어렵다.</li>
+<li>인터페이스의 경우에는 메서드가 많으면 문제가 두 배는 더 심각하다(구현하는 사람에게도 그렇고, 사용자에게도 그렇다).</li>
+<li>수행해야 하는 동작 각각에 대해서 기능적으로 완전한 메서드를 제공하라.</li>
+<li>“단축(shorthand)” 메서드는 자주 쓰일 때문 추가하라. 그럴지 잘 모르겠다면, 빼버려라.</li>
+</ul>
+<h4 id="인자-리스트parameter-list를-길게-만들지-마라"><a href="#인자-리스트-parameter-list-를-길게-만들지-마라" class="headerlink" title="인자 리스트(parameter list)를 길게 만들지 마라."></a>인자 리스트(parameter list)를 길게 만들지 마라.</h4><ul>
+<li>4개 이하가 되도록 애쓰라.</li>
+<li>자료형이 같은 인자들이 길게 연결된 인자 리스트는 특히 더 위험하다.</li>
+</ul>
+<p><strong>긴 인자 리스트를 짧게 줄이는 방법</strong></p>
+<ol>
+<li>여러 메서드로 나누는 것<ul>
+<li>여러 메서드가 생길수 있지만, 직교성(orthogonality) 향상을 통해 줄일 수 있다.</li>
+</ul>
+</li>
+<li>helper class를 만들어 인자들을 그룹별로 나누는 것<ul>
+<li>보통 이 helper class들은 static 맴버 클래스다(규칙 22).</li>
+<li>이 기법은 자주 등장하는 일련의 인자들이 어떤 별도 개체(entity)를 나타낼 때 쓰면 좋다.<ul>
+<li>카드의 rank와 suit를 인자로 받는 메서드가 있다면, 카드를 나타내는 helper class를 만들어서 인자로 사용</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>builder pattern을 고쳐서 객체 생성 대신 메서드 호출에 적용하는 것<ul>
+<li>많은 인자가 필요하지만 그 인자들 가운데 상당수는 옵션이라면, 모든 인자를 표현하는 객체 하나를 정의하고 그 객체의 setter 메서드를 클라이언트가 여러 번 호출할 수 있도록 하면 좋다.</li>
+<li>인자가 설정되고 나면 클라이언트를 “execute” 메서드를 호출하여 최종적인 유효성 검사를 실행한 뒤 실제 계산 진행</li>
+</ul>
+</li>
+</ol>
+<h4 id="인자의-자료형으로는-클래스보다-인터페이스가-좋다"><a href="#인자의-자료형으로는-클래스보다-인터페이스가-좋다" class="headerlink" title="인자의 자료형으로는 클래스보다 인터페이스가 좋다."></a>인자의 자료형으로는 클래스보다 인터페이스가 좋다.</h4><ul>
+<li>인자를 정의하기에 적합한 인터페이스가 있다면, 구현 클래스 대신 인터페이스를 인자 자료형으로 쓰자.</li>
+</ul>
+<h4 id="인자-자료형으로-boolean을-쓰는-것보다-원소가-2개인-enum-자료형을-쓰는-것이-낫다"><a href="#인자-자료형으로-boolean을-쓰는-것보다-원소가-2개인-enum-자료형을-쓰는-것이-낫다" class="headerlink" title="인자 자료형으로 boolean을 쓰는 것보다, 원소가 2개인 enum 자료형을 쓰는 것이 낫다."></a>인자 자료형으로 boolean을 쓰는 것보다, 원소가 2개인 enum 자료형을 쓰는 것이 낫다.</h4><ul>
+<li>좀 더 읽기 편한 코드가 만들어진다.</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;../../../../2017/08/12/methods-1/#규칙-38-인자의-유효성을-검사하라&quot;&gt;규칙 38&lt;/a&gt; - 인자의 유효성을 검사하라&lt;br&gt;&lt;a href=&quot;../../../../2017/08/12/methods-1/#규칙-39-필요하다면-방어적-복사본을-만들라&quot;&gt;규칙 39&lt;/a&gt; - 필요하다면 방어적 복사본을 만들라&lt;br&gt;&lt;a href=&quot;../../../../2017/08/12/methods-1/#규칙-40-메서드-시그니처는-신중하게-설계하라&quot;&gt;규칙 40&lt;/a&gt; - 메서드 시그니처는 신중하게 설계하라&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="https://wickso.me/tags/java/"/>
+    
+      <category term="effective java" scheme="https://wickso.me/tags/effective-java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>이펙티브자바 6장. 열거형과 어노테이션 - 1</title>
     <link href="https://wickso.me/2017/08/05/enums-and-annotations-1/"/>
     <id>https://wickso.me/2017/08/05/enums-and-annotations-1/</id>
@@ -1989,70 +2085,6 @@
       <category term="java" scheme="https://wickso.me/tags/java/"/>
     
       <category term="effective java" scheme="https://wickso.me/tags/effective-java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Factory Method Pattern</title>
-    <link href="https://wickso.me/2017/02/10/factory-method-pattern/"/>
-    <id>https://wickso.me/2017/02/10/factory-method-pattern/</id>
-    <published>2017-02-10T01:00:00.000Z</published>
-    <updated>2017-05-21T11:45:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="의도"><a href="#의도" class="headerlink" title="의도"></a>의도</h2><p>객체를 생성하기 위해 인터페이스를 정의하지만, 어떤 클래스의 인스턴스를 생성할지에 대한 결정은 서브클래스가 내리도록 한다.</p>
-<blockquote><p>Factory Method라는 패턴 이름이 적절하지 못한데, 이름으로 인해 객체를 생성하는 메소드를 Factory method라 오해하는 개발자가 많이 있다(Allen Holub의 말을 인용.) 이런 생성 메소드가 모두 Factory method 패턴을 사용하는 것은 아니다. Template Method의 생성 패턴 버전으로 볼 수 있는데 Template Method를 알지 못한다면 그 패턴을 먼저 이해하는 것이 Factory Method를 이해하기 수월할 것이다.</p>
-<footer><strong>위키백과</strong><cite><a href="https://ko.wikipedia.org/wiki/%ED%8C%A9%ED%86%A0%EB%A6%AC_%EB%A9%94%EC%84%9C%EB%93%9C_%ED%8C%A8%ED%84%B4" rel="external nofollow noopener noreferrer" target="_blank">팩토리 메서드 패턴</a></cite></footer></blockquote>
-<h2 id="구조"><a href="#구조" class="headerlink" title="구조"></a>구조</h2><p><img src="https://www.codeproject.com/KB/architecture/csdespat_1/dpcs_fm.gif" alt="Factory Method Pattern"></p>
-<h2 id="활용성"><a href="#활용성" class="headerlink" title="활용성"></a>활용성</h2><ul>
-<li>어떤 클래스가 자신이 생성해야 하는 객체의 클래스를 예측할 수 없을 때</li>
-<li>생성할 객체를 기술하는 책임을 자신의 서브클래스가 지정했으면 할 때</li>
-<li>객체 생성의 책임을 몇 개의 보조 서브클래스 가운데 하나에게 위임하고, 어떤 서브클래스가 위임자인지에 대한 정보를 국소화시키고 싶을 때</li>
-</ul>
-<a id="more"></a>
-<h2 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h2><p>예를 들어 다양한 종류의 문서를 표현하는 응용프로그램 프레임워크가 있다. 이를 위해서는 일단 두 개의 큰 추상화가 필요하다. 하나는 <em>Creator</em>(응용프로그램) 추상 클래스이고, 다른 하나는 <em>Product</em>(문서) 추상 클래스(혹은 인터페이스)이다.<br><em>Creator</em> 클래스는 문서의 인스턴스를 ++언제++ 만들지는 알지만, ++어떤 문서++를 만들어야 하는지는 알지 못한다. <em>Product</em> 클래스가 추상 클래스이기 때문에 인스턴스를 가질 수 없기 때문이다.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Creator</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> Product <span class="title">newProduct</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> createProduct(); &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Product <span class="title">createProduct</span><span class="params">()</span></span>; <span class="comment">// factory method</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Product</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
-<p>팩토리 메서드 패턴은 이런 문제에 대한 해법을 제시한다. <em>Document</em>의 서브클래스 중 어느 것을 생성해야 하는지에 대한 정보를 캡슐화하고, 그것을 프레임워크에서 떼어낸다.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextProduct</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhotoProduct</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
-<p><em>TextProduct</em> 클래스와 PhotoProduct 클래스를 팩토리 메서드 패턴을 활용하여 생성한다면 아래와 같은 방법이 있다.</p>
-<h4 id="방법-1-추상-클래스"><a href="#방법-1-추상-클래스" class="headerlink" title="방법 1) 추상 클래스"></a>방법 1) 추상 클래스</h4><p>사용자는 특정 응용프로그램에 종속적인 구현을 위해서 두 클래스의 서브 클래스를 정의할 수 있다. <em>Creator</em> 클래스는 <em>Product</em> 객체를 관리하는 책임을 맡고 있으며, 필요에 따라 문서를 생성할 수도 있다.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// factory pattern example with abstract class</span></div><div class="line">Creator textCreator = <span class="keyword">new</span> TextCreator();</div><div class="line">Product p1 = textCreator.newProduct();</div><div class="line"></div><div class="line">Creator photoCreator = <span class="keyword">new</span> PhotoCreator();</div><div class="line">Product p2 = photoCreator.newProduct();</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextCreator</span> <span class="keyword">extends</span> <span class="title">Creator</span> </span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Product <span class="title">createProduct</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> WordProduct();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhotoCreator</span> <span class="keyword">extends</span> <span class="title">Creator</span> </span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Product <span class="title">createProduct</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PhotoProduct();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextProduct</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhotoProduct</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
-<h4 id="방법-2-팩토리-메서드-매개변수화-abstract-factory-pattern"><a href="#방법-2-팩토리-메서드-매개변수화-abstract-factory-pattern" class="headerlink" title="방법 2) 팩토리 메서드 매개변수화 - abstract factory pattern"></a>방법 2) 팩토리 메서드 매개변수화 - abstract factory pattern</h4><p>팩토리 메서드가 매개변수를 받아서 어떤 종류의 제품을 생성할지 만드는 방법도 있다. (추상 팩토리 패턴은 팩토리 메서드를 이용해서 구현할 때가 많다)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Factory pattern example using argument</span></div><div class="line">Product p1 = Creator1.create(ProductType.TEXT);</div><div class="line">Product p2 = Creator1.create(ProductType.PHOTO);</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ProductType &#123;</div><div class="line">  TEXT, PHOTO</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Creator</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">public</span> Product <span class="title">create</span><span class="params">(ProductType type)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (type) &#123;</div><div class="line">      <span class="keyword">case</span> TEXT:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ExcelProduct();</div><div class="line">      <span class="keyword">case</span> PHOTO:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ImageProduct();</div><div class="line">      <span class="keyword">default</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="방법-3-lazy-initialization-기법"><a href="#방법-3-Lazy-Initialization-기법" class="headerlink" title="방법 3) Lazy Initialization 기법"></a>방법 3) Lazy Initialization 기법</h4><p>인스턴스화하는 접근자 메서드를 통해서만 인스턴스에 접근하는 방법으로, 생성자에서 아무 의미 없는 값으로 인스턴스에 대한 매개변수를 초기화하고, 접근자 메서드가 인스턴스를 반환하도록 할 수 있다. 생성자가 초기화 시키는 것이 아니라 필요한 시점에서 초기화를 수행하기 때문에 이런 기법을 Lazy Initialization이라고 한다.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// factory pattern with lazy initialization</span></div><div class="line">TextCreator textCreator = <span class="keyword">new</span> TextCreator();</div><div class="line">List collection = textCreator.newCollection();</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextCreator</span> <span class="keyword">extends</span> <span class="title">Creator</span> </span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">protected</span> List <span class="title">createCollection</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;TextProduct&gt;();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Creator</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> List&lt;Product&gt; collection = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> List <span class="title">newCollection</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// lazy initialization</span></div><div class="line">    <span class="keyword">if</span> (collection == <span class="keyword">null</span>) &#123;</div><div class="line">      collection = createCollection();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> collection;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// factory method</span></div><div class="line">  <span class="function"><span class="keyword">abstract</span> <span class="keyword">protected</span> List <span class="title">createCollection</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="방법-4-템플릿-활용"><a href="#방법-4-템플릿-활용" class="headerlink" title="방법 4) 템플릿 활용"></a>방법 4) 템플릿 활용</h4><p>팩토리 메서드를 사용하면 생길 수 있는 문제점 중 하나는 <em>Product</em> 클래스 하나를 추가하려 할 때마다 <em>Creator</em> 클래스를 서브클래싱해야 한다는 점이다(<a href="#방법-1-추상-클래스">방법 1</a>). 이로써 클래스 계통의 부피가 확장되는 문제가 생길 수 있다. 이런 문제를 해결할 수 있는 방법 중 하나는 <em>Creator</em> 클래스를 상속받는 제네릭 클래스를 정의하고 Product 클래스로 매개변수화되도록 만드는 것이다.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// factory pattern example whti template</span></div><div class="line">StandardCreator&lt;WordProduct&gt; wordProductCreator = <span class="keyword">new</span> StandardCreator&lt;&gt;(WordProduct.class);</div><div class="line">Product p1 = wordProductCreator.newProduct();</div><div class="line"></div><div class="line">StandardCreator&lt;ImageProduct&gt; imageProductCreator = <span class="keyword">new</span> StandardCreator&lt;&gt;(ImageProduct.class);</div><div class="line">Product p2 = imageProductCreator.newProduct();</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Creator Template</div><div class="line"> * <span class="doctag">@param</span> &lt;T&gt; product type</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StandardCreator</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Product</span>&gt; <span class="keyword">extends</span> <span class="title">Creator</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> Class&lt;T&gt; cls;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">StandardCreator</span><span class="params">(Class&lt;T&gt; cls)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.cls = cls;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Product <span class="title">createProduct</span><span class="params">()</span> </span>&#123;</div><div class="line">    T product = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      product = cls.newInstance();</div><div class="line">    &#125; <span class="keyword">catch</span> (InstantiationException | IllegalAccessException e) &#123;</div><div class="line">      e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> product;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<hr>
-<div class="tip"><br>    <div>아래 책를 참고하여 학습한 내용을 정리/기록한 포스트입니다. 자세한 내용은 책을 참고하시기 바라며, 문제가 있을 경우 연락 부탁드립니다.</div><br>    <ul><br>        <li>[<a href="http://wiki.c2.com/?GangOfFour" rel="external nofollow noopener noreferrer" target="_blank">GOF</a>{kr}:156] - 팩토리 메서드</li><br>        <li>GoF, 김정아(옮긴이), Design Patterns, 개정판, 프로텍미디어, 2015.</li><br>    </ul><br></div>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;의도&quot;&gt;&lt;a href=&quot;#의도&quot; class=&quot;headerlink&quot; title=&quot;의도&quot;&gt;&lt;/a&gt;의도&lt;/h2&gt;&lt;p&gt;객체를 생성하기 위해 인터페이스를 정의하지만, 어떤 클래스의 인스턴스를 생성할지에 대한 결정은 서브클래스가 내리도록 한다.&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;Factory Method라는 패턴 이름이 적절하지 못한데, 이름으로 인해 객체를 생성하는 메소드를 Factory method라 오해하는 개발자가 많이 있다(Allen Holub의 말을 인용.) 이런 생성 메소드가 모두 Factory method 패턴을 사용하는 것은 아니다. Template Method의 생성 패턴 버전으로 볼 수 있는데 Template Method를 알지 못한다면 그 패턴을 먼저 이해하는 것이 Factory Method를 이해하기 수월할 것이다.&lt;/p&gt;
-&lt;footer&gt;&lt;strong&gt;위키백과&lt;/strong&gt;&lt;cite&gt;&lt;a href=&quot;https://ko.wikipedia.org/wiki/%ED%8C%A9%ED%86%A0%EB%A6%AC_%EB%A9%94%EC%84%9C%EB%93%9C_%ED%8C%A8%ED%84%B4&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;팩토리 메서드 패턴&lt;/a&gt;&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;
-&lt;h2 id=&quot;구조&quot;&gt;&lt;a href=&quot;#구조&quot; class=&quot;headerlink&quot; title=&quot;구조&quot;&gt;&lt;/a&gt;구조&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://www.codeproject.com/KB/architecture/csdespat_1/dpcs_fm.gif&quot; alt=&quot;Factory Method Pattern&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;활용성&quot;&gt;&lt;a href=&quot;#활용성&quot; class=&quot;headerlink&quot; title=&quot;활용성&quot;&gt;&lt;/a&gt;활용성&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;어떤 클래스가 자신이 생성해야 하는 객체의 클래스를 예측할 수 없을 때&lt;/li&gt;
-&lt;li&gt;생성할 객체를 기술하는 책임을 자신의 서브클래스가 지정했으면 할 때&lt;/li&gt;
-&lt;li&gt;객체 생성의 책임을 몇 개의 보조 서브클래스 가운데 하나에게 위임하고, 어떤 서브클래스가 위임자인지에 대한 정보를 국소화시키고 싶을 때&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="java" scheme="https://wickso.me/tags/java/"/>
-    
-      <category term="design pattern" scheme="https://wickso.me/tags/design-pattern/"/>
-    
-      <category term="creational pattern" scheme="https://wickso.me/tags/creational-pattern/"/>
     
   </entry>
   
