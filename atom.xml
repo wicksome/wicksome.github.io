@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wickso.me/"/>
-  <updated>2018-02-05T07:00:19.929Z</updated>
+  <updated>2018-02-05T07:08:30.994Z</updated>
   <id>https://wickso.me/</id>
   
   <author>
@@ -20,10 +20,11 @@
     <link href="https://wickso.me/2018/02/05/optional-orelse-orelseget/"/>
     <id>https://wickso.me/2018/02/05/optional-orelse-orelseget/</id>
     <published>2018-02-05T06:20:00.000Z</published>
-    <updated>2018-02-05T07:00:19.929Z</updated>
+    <updated>2018-02-05T07:08:30.994Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><code>orElseGet()</code>는 <code>null</code>일 경우에만 호출되고, <code>orElse()</code>는 무조건 호출된다.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalTest</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="meta">@Test</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"1."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">null</span>).orElse(<span class="keyword">new</span> TestObject());</div><div class="line">    System.out.println(<span class="string">"2."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">new</span> TestObject()).orElse(<span class="keyword">new</span> TestObject());</div><div class="line">    System.out.println(<span class="string">"3."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">null</span>).orElseGet(TestObject::<span class="keyword">new</span>);</div><div class="line">    System.out.println(<span class="string">"4."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">new</span> TestObject()).orElseGet(TestObject::<span class="keyword">new</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">TestObject</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String a;</div><div class="line"></div><div class="line">    TestObject() &#123;</div><div class="line">      System.out.println(<span class="string">"new"</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalTest</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="meta">@Test</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"1."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">null</span>).orElse(<span class="keyword">new</span> TestObject());</div><div class="line">    System.out.println(<span class="string">"2."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">new</span> TestObject()).orElse(<span class="keyword">new</span> TestObject());</div><div class="line">    System.out.println(<span class="string">"3."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">null</span>).orElseGet(TestObject::<span class="keyword">new</span>);</div><div class="line">    System.out.println(<span class="string">"4."</span>);</div><div class="line">    Optional.ofNullable(<span class="keyword">new</span> TestObject()).orElseGet(TestObject::<span class="keyword">new</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">TestObject</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String str;</div><div class="line">    TestObject() &#123;</div><div class="line">      System.out.println(<span class="string">"new"</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">1.</div><div class="line">new</div><div class="line">2.</div><div class="line">new</div><div class="line">new</div><div class="line">3.</div><div class="line">new</div><div class="line">4.</div><div class="line">new</div></pre></td></tr></table></figure>
 <p>불필요한 호출을 줄이기 위해 <code>null</code>일 경우 반환할 값이 primitive type이면 <code>orElse()</code>, 객체를 생성해야한다면 <code>orElseGet()</code>를 사용하면 될 것 같다.</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span> value = Optional.ofNullable(obj1).orElse(<span class="number">123</span>);</div><div class="line">TestObject object = Optional.ofNullable(obj2).orElseGet(() -&gt; <span class="keyword">new</span> TestObject());</div><div class="line">TestObject object = Optional.ofNullable(obj2).orElseGet(TestObject::<span class="keyword">new</span>);</div></pre></td></tr></table></figure>
@@ -35,7 +36,7 @@
     
     <summary type="html">
     
-      &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;p&gt;&lt;code&gt;orElseGet()&lt;/code&gt;는 &lt;code&gt;null&lt;/
+      &lt;p&gt;&lt;code&gt;orElseGet()&lt;/code&gt;는 &lt;code&gt;null&lt;/code&gt;일 경우에만 호출되고, &lt;code&gt;orElse()&lt;/code&gt;는 무조건 호출된다.&lt;/p&gt;
     
     </summary>
     
@@ -43,6 +44,8 @@
       <category term="java" scheme="https://wickso.me/tags/java/"/>
     
       <category term="java8" scheme="https://wickso.me/tags/java8/"/>
+    
+      <category term="Optional" scheme="https://wickso.me/tags/optional/"/>
     
   </entry>
   
