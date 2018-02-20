@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wickso.me/2018/02/20/java8-timezone/</loc>
+    
+    <lastmod>2018-02-20T14:37:14.168Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wickso.me/2018/02/05/optional-orelse-orelseget/</loc>
     
     <lastmod>2018-02-05T07:08:30.994Z</lastmod>
