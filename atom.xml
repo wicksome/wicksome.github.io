@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wickso.me/"/>
-  <updated>2018-02-20T14:37:14.168Z</updated>
+  <updated>2018-02-21T06:20:00.000Z</updated>
   <id>https://wickso.me/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Shell Script Cookbook</title>
+    <link href="https://wickso.me/2018/02/21/shell-script-cook-book/"/>
+    <id>https://wickso.me/2018/02/21/shell-script-cook-book/</id>
+    <published>2018-02-21T06:20:00.000Z</published>
+    <updated>2018-02-21T06:20:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a data-flickr-embed="true" href="https://www.flickr.com/photos/r00s/6904332505" title="Transmediale - Forkbomb shell by Jaromil" rel="external nofollow noopener noreferrer" target="_blank"><img src="https://farm8.staticflickr.com/7047/6904332505_5aca64c3c6_z.jpg" width="640" height="427" alt="Transmediale - Forkbomb shell by Jaromil"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script></p>
+<blockquote>
+<p>두번 작성하기 귀찮아서 모아놓은 스크립트</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="특정-시간대-로그-파일로-저장하기"><a href="#특정-시간대-로그-파일로-저장하기" class="headerlink" title="특정 시간대 로그, 파일로 저장하기"></a>특정 시간대 로그, 파일로 저장하기</h2><p><em>2018-02-21 05:00 ~ 2018-02-21 05:09 로그 보기</em></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">grep -E <span class="string">"^2018-02-21 05:0[0-9]:[0-9]&#123;2&#125; "</span> catalina.out &gt; temp.$(hostname).out</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/r00s/6904332505&quot; title=&quot;Transmediale - Forkbomb shell by Jaromil&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7047/6904332505_5aca64c3c6_z.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;Transmediale - Forkbomb shell by Jaromil&quot;&gt;&lt;/a&gt;&lt;script async src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;두번 작성하기 귀찮아서 모아놓은 스크립트&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="shell script" scheme="https://wickso.me/tags/shell-script/"/>
+    
+      <category term="bash" scheme="https://wickso.me/tags/bash/"/>
+    
+  </entry>
   
   <entry>
     <title>ZoneId, LocalDateTime, ZonedDateTime 활용하기</title>
@@ -1804,108 +1836,6 @@
     <summary type="html">
     
       &lt;p&gt;&lt;a href=&quot;../../../../2017/04/15/classes-and-interfaces-2/#16-계승하는-대신-구성하라&quot;&gt;규칙 16&lt;/a&gt; - 계승하는 대신 구성하라&lt;br&gt;&lt;a href=&quot;../../../../2017/04/15/classes-and-interfaces-2/#17-계승을-위한-설계와-문서를-갖추거나-그럴-수-없다면-계승을-금지하라&quot;&gt;규칙 17&lt;/a&gt; - 계승을 위한 설계와 문서를 갖추거나, 그럴 수 없다면 계승을 금지하라&lt;br&gt;&lt;a href=&quot;../../../../2017/04/15/classes-and-interfaces-2/#18-추상-클래스-대신-인터페이스를-사용하라&quot;&gt;규칙 18&lt;/a&gt; - 추상 클래스 대신 인터페이스를 사용하라&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="java" scheme="https://wickso.me/tags/java/"/>
-    
-      <category term="effective java" scheme="https://wickso.me/tags/effective-java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>이펙티브자바 4장. 클래스와 인터페이스 - 1</title>
-    <link href="https://wickso.me/2017/03/29/classes-and-interfaces-1/"/>
-    <id>https://wickso.me/2017/03/29/classes-and-interfaces-1/</id>
-    <published>2017-03-29T01:00:00.000Z</published>
-    <updated>2017-05-21T11:41:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a href="../../../../2017/03/29/classes-and-interfaces-1/#13-클래스와-맴버의-접근-권한을-최소화하라">규칙 13</a> - 클래스와 맴버의 접근 권한을 최소화하라<br><a href="../../../../2017/03/29/classes-and-interfaces-1/#14-public-클래스-안에는-public-필드를-두지-말고-접근자-메서드를-사용하라">규칙 14</a> - public 클래스 안에는 public 필드를 두지 말고 접근자 메서드를 사용하라<br><a href="../../../../2017/03/29/classes-and-interfaces-1/#15-변경-가능성을-최소화하라">규칙 15</a> - 변경 가능성을 최소화하라</p>
-<a id="more"></a>
-<div class="tip"><br>    <div>아래 책를 참고하여 학습한 내용을 정리/기록한 포스트입니다. 자세한 내용은 책을 참고하시기 바라며, 문제가 있을 경우 연락 부탁드립니다.</div><br>    <ul><br>        <li>조슈아 블로크, 이병준(옮긴이), Effective Java, 2판, 인사이트, 2015.</li><br>    </ul><br></div>
-
-<hr>
-<h2 id="13-클래스와-맴버의-접근-권한을-최소화하라"><a href="#13-클래스와-맴버의-접근-권한을-최소화하라" class="headerlink" title="13. 클래스와 맴버의 접근 권한을 최소화하라"></a>13. 클래스와 맴버의 접근 권한을 최소화하라</h2><ul>
-<li>소프트웨어 설계의 기본적인 원칙 중 하나 - 정보 은닉<sub>information hiding</sub>, 캡슐화<sub>encapsulation</sub></li>
-<li>접근 권한은 가능한 낮춰라.</li>
-<li>public static final 필드를 제외한 어떤 필드도 public 필드로 선언하지 마라</li>
-<li>public static final 필드가 참조하는 객체는 변경 불가능 객체로 만들어라</li>
-</ul>
-<h4 id="정보-은닉-캡슐화"><a href="#정보-은닉-캡슐화" class="headerlink" title="정보 은닉, 캡슐화"></a>정보 은닉, 캡슐화</h4><ul>
-<li>시스템을 구성하는 모듈 사이의 <em>의존성을 낮춤<sub>decouple</sub></em></li>
-<li>성능을 보장하는 것은 아니지만, 효과적인 성능 튜닝을 가능하게 한다. 어떤 모듈이 성능 문제를 일으키는지 프로파일링<sub>profiling</sub> 하기 용이하기 때문(<a href="#item55">규칙 55</a>)</li>
-<li>소프트웨어의 재사용 가능성을 높인다.</li>
-<li>대규모 시스템 개발 과정의 리스트를 낮춘다.</li>
-<li>접근 제어<sub>access control</sub> 메커니즘은 클래스와 인터페이스, 그리고 그 멤버들의 접근 권한<sub>accessibility</sub>을 규정한다(<a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-6.html#jls-6.6" rel="external nofollow noopener noreferrer" target="_blank">JLS, 6.6</a>)</li>
-<li><strong>각 클래스와 멤버는 가능한 한 접근 불가능하도록 만들라는 것</strong> - 가장 낮은 접근 권한 설정</li>
-<li><strong>객체 필드<sub>instance field</sub>는 절대로 public으로 선언하면 안 된다</strong>(<a href="#item14">규칙 14</a>).</li>
-<li><strong>변경 가능 public 필드를 가진 클래스는 다중 스레드에 안전하지 않다.</strong></li>
-<li>예외적으로 어떤 상수들이 클래스로 추상화된 결과물의 핵심적 부분을 구성한다고 판단되는 경우, 해당 상수들을 <code>public static final</code> 필드들로 선언하여 공개할 수 있다. 이런 필드들은 관습적으로 대문자로 구성된 이름을 가지며, 이름을 구성하는 단어들은 밑줄 기호로 구분한다(<a href="#item56">규칙 56</a>). 이런 필드들은 반드시 기본 자료형 값들을 갖거나, 변경 불가능 객체를 참조해야 한다(<a href="#item15">규칙 15</a>).</li>
-<li><p>길이가 0 아닌 배열은 언제나 변경 가능하므로, <strong>public static final 배열 필드를 두거나, 배열 필드를 반환하는 접근자<sub>accessor</sub>를 정의하면 안 된다.</strong> - 보안문제 유발</p>
-  <figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// AS-IS: 보안 문제를 초래할 수 있는 코드</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VAUES = &#123;...&#125;;</div><div class="line"></div><div class="line"><span class="comment">// TO-BE: (1) 변경 불가능 public 리스트 사용</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] PRIVATE_VALUES = &#123;...&#125;;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;Thing&gt; VALUES = Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));</div><div class="line"></div><div class="line"><span class="comment">// TO-BE: (2) 복사해서 반환하는 메서드 추가</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] PRIVATE_VALUES = &#123;...&#125;;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] values() &#123;</div><div class="line">  <span class="keyword">return</span> PRIVATE_VALUES.clone();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h2 id="14-public-클래스-안에는-public-필드를-두지-말고-접근자-메서드를-사용하라"><a href="#14-public-클래스-안에는-public-필드를-두지-말고-접근자-메서드를-사용하라" class="headerlink" title="14. public 클래스 안에는 public 필드를 두지 말고 접근자 메서드를 사용하라"></a>14. public 클래스 안에는 public 필드를 두지 말고 접근자 메서드를 사용하라</h2><ul>
-<li><strong>getter/setter(접근자 메서드)를 사용하자</strong><ul>
-<li>캡슐화의 이점</li>
-<li>불변식 가능</li>
-<li>필드 사용시 다른 동작 가능</li>
-<li>(+) boilerplate code를 줄이기 위해서 lombok의 <code>@Data</code>, <code>@Value</code> 활용</li>
-</ul>
-</li>
-<li>원칙을 어긴 Java 클래스 - <code>Point.class</code>, <code>Dimension.class</code><ul>
-<li>이런 클래스는 참고하지 않는 것이 좋다.</li>
-<li>Dimension 클래스가 내부 표현을 공개한 것은 아직까지도 해결되지 않고 있는 심각한 성능 문제 때문이다(<a href="#item55">규칙 55</a>에 설명).</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="15-변경-가능성을-최소화하라"><a href="#15-변경-가능성을-최소화하라" class="headerlink" title="15. 변경 가능성을 최소화하라"></a>15. 변경 가능성을 최소화하라</h2><h4 id="요약"><a href="#요약" class="headerlink" title="요약"></a>요약</h4><ul>
-<li>Mutable Class로 만들 타당한 이유가 없다면, 반드시 Immutable Class로 만들어야 한다<ul>
-<li>모든 getter 마다 그에 대응하는 setter를 두는 것은 피하라</li>
-<li>유일한 장점은 특정 상황에서 성능 문제가 생길 수 있다는 것이다</li>
-<li>작은 객체는 반드시 immutable로 만들어라</li>
-</ul>
-</li>
-<li>Immutable Class로 만들 수 없다면, 변경 가능성을 최대한 제한하라</li>
-<li>특별한 이유가 없다면 모든 필드는 final로 선언하라<ul>
-<li>특별한 이유가 없다면, 생성자 이외에 public 초기화 메서드나 정적 팩터리 메서드를 제공하지 마라</li>
-<li>재 초기화 메서드도 제공하지 마라. 코드 복잡성만 늘어나고, 성능 향상에 도움 되는 경우는 거의 없다</li>
-</ul>
-</li>
-</ul>
-<h4 id="변경-불가능immutable-클래스-생성-규칙"><a href="#변경-불가능immutable-클래스-생성-규칙" class="headerlink" title="변경 불가능immutable 클래스 생성 규칙"></a>변경 불가능<sub>immutable</sub> 클래스 생성 규칙</h4><ul>
-<li>객체 상태를 변경하는 메서드(수정자<sub>mutator</sub> 메서드 등)를 제공하지 않는다.</li>
-<li>계승할(상속 받을) 수 없도록 한다. - e.g. <code>public final class { ... }</code></li>
-<li>모든 필드는 final로 선언한다.<ul>
-<li>프로그래머의 의도가 분명해짐</li>
-<li>자바 <em>메모리 모델</em>에 명시된 바와 같이[<a href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-17.html#jls-17.5" rel="external nofollow noopener noreferrer" target="_blank">JLS, 17.5</a>], 새로 생성된 객체에 대한 참조가 동기화 없이 다른 스레드로 전달되어도 안전</li>
-</ul>
-</li>
-<li>모든 필드를 private로 선언한다.</li>
-<li>변경 가능 컴포넌트에 대한 독점적 접근권을 보장한다.<ul>
-<li>변경 가능 객체에 대한 참조를 클라이언트는 획득할 수 없어야 한다.</li>
-<li>그런 필드는 클라이언트가 제공하는 객체로 초기화해서는 안되고, 접근자<sub>accessor</sub> 또한 그런 필드를 반환해서는 안 된다.</li>
-<li>생성자나 접근다, readObject 메서드(<a href="#item76">규칙 76</a>)안에서는 <em>방어적 복사본<sub>defensive copy</sub></em>을 만들어야 한다(<a href="#item39">규칙 39</a>).</li>
-</ul>
-</li>
-</ul>
-<h4 id="immutable-object-특징"><a href="#Immutable-Object-특징" class="headerlink" title="Immutable Object 특징"></a>Immutable Object 특징</h4><ul>
-<li><strong>변경 불가능 객체는 단순하다. 생성될 때 부여된 한 가지 상태만 갖는다.</strong></li>
-<li><strong>변경 불가능 객체는 스레드에 안전(thread-safe)할 수밖에 없다. 어떤 동기화도 필요 없으며,</strong> 여러 스레드가 동시에 사용해도 상태가 훼손될 일이 없다.</li>
-<li><strong>변경 불가능 객체는 자유롭게 공유할 수 있다.</strong> 방어적 복사본(<a href="#item39">규칙 39</a>)을 만들 필요가 없단 뜻이기도 하다.</li>
-<li><strong>변경 불가능 객체는 그 내부도 공유할 수 있다.</strong></li>
-<li><strong>변경 불가능 객체는 다른 객체의 구성요소로도 훌륭하다.</strong></li>
-<li><strong>변경 불가능 객체의 유일한 단점은 값마다 별도의 객체를 만들어야 한다는 점이다.</strong> 따라서 객체 생성 비용이 높을 가능성이 있다.</li>
-</ul>
-<h4 id="immutable-object-생성하는-다른-방법"><a href="#Immutable-Object-생성하는-다른-방법" class="headerlink" title="Immutable Object 생성하는 다른 방법"></a>Immutable Object 생성하는 다른 방법</h4><p>모든 생성자를 private이나 package-private로 선언하고 public 생성자 대신 public 정적 팩터리 제공(<a href="#item1">규칙 1</a>) - 장점은 규칙 1 확인</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;../../../../2017/03/29/classes-and-interfaces-1/#13-클래스와-맴버의-접근-권한을-최소화하라&quot;&gt;규칙 13&lt;/a&gt; - 클래스와 맴버의 접근 권한을 최소화하라&lt;br&gt;&lt;a href=&quot;../../../../2017/03/29/classes-and-interfaces-1/#14-public-클래스-안에는-public-필드를-두지-말고-접근자-메서드를-사용하라&quot;&gt;규칙 14&lt;/a&gt; - public 클래스 안에는 public 필드를 두지 말고 접근자 메서드를 사용하라&lt;br&gt;&lt;a href=&quot;../../../../2017/03/29/classes-and-interfaces-1/#15-변경-가능성을-최소화하라&quot;&gt;규칙 15&lt;/a&gt; - 변경 가능성을 최소화하라&lt;/p&gt;
     
     </summary>
     
