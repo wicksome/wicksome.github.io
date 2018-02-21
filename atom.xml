@@ -22,21 +22,17 @@
     <published>2018-02-21T06:20:00.000Z</published>
     <updated>2018-02-21T06:20:00.000Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><a data-flickr-embed="true" href="https://www.flickr.com/photos/r00s/6904332505" title="Transmediale - Forkbomb shell by Jaromil" rel="external nofollow noopener noreferrer" target="_blank"><img src="https://farm8.staticflickr.com/7047/6904332505_5aca64c3c6_z.jpg" width="640" height="427" alt="Transmediale - Forkbomb shell by Jaromil"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script></p>
-<blockquote>
+    <content type="html"><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
 <p>두번 작성하기 귀찮아서 모아놓은 스크립트</p>
 </blockquote>
-<a id="more"></a>
 <h2 id="특정-시간대-로그-파일로-저장하기"><a href="#특정-시간대-로그-파일로-저장하기" class="headerlink" title="특정 시간대 로그, 파일로 저장하기"></a>특정 시간대 로그, 파일로 저장하기</h2><p><em>2018-02-21 05:00 ~ 2018-02-21 05:09 로그 보기</em></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">grep -E <span class="string">"^2018-02-21 05:0[0-9]:[0-9]&#123;2&#125; "</span> catalina.out &gt; temp.$(hostname).out</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/r00s/6904332505&quot; title=&quot;Transmediale - Forkbomb shell by Jaromil&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7047/6904332505_5aca64c3c6_z.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;Transmediale - Forkbomb shell by Jaromil&quot;&gt;&lt;/a&gt;&lt;script async src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;두번 작성하기 귀찮아서 모아놓은 스크립트&lt;/p&gt;
-&lt;/blockquote&gt;
+      &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css&quot;&gt;&lt;blockquote&gt;
+&lt;p&gt;두번 작성하기 귀찮아서 모아놓은 스크립트&lt;/p
     
     </summary>
     
