@@ -1,14 +1,13 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Java8에서 타임존(Time-Zone) 다루기 · Wicksome Blog</title><meta name="description" content="Example ZoneId, LocalDateTime, ZonedDateTime in java8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="canonical" href="https://wickso.me/2018/02/20/time-zone-with-java8/"><link rel="search" type="application/opensearchdescription+xml" href="https://wickso.me/atom.xml" title="Wicksome Blog"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/categories/slide/" target="_self" class="nav-list-link">SLIDE</a></li><li class="nav-list-item"><a href="https://github.com/wicksome" target="_blank" class="nav-list-link" rel="external nofollow noopener noreferrer">GITHUB</a></li><li class="nav-list-item"><a href="https://www.linkedin.com/in/yeongjun/" target="_blank" class="nav-list-link" rel="external nofollow noopener noreferrer">RESUME</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Java8에서 타임존(Time-Zone) 다루기</h1><div class="post-info">2018년 2월 20일<ul class="tags"><li><a href="/tags/java/" title="java" class="tag">java </a></li><li><a href="/tags/java8/" title="java8" class="tag">java8 </a></li><li><a href="/tags/timezone/" title="timezone" class="tag">timezone </a></li></ul></div><div class="post-content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Standard_World_Time_Zones.png/800px-Standard_World_Time_Zones.png" alt="Time Zone Map"></p>
-<h2 id="time-zone"><a href="#Time-Zone" class="headerlink" title="Time-Zone"></a>Time-Zone</h2><blockquote><p>The term time zone can be used to describe several different things, but mostly it refers to the local time of a region or a country.</p>
-<footer><strong>What is a Time Zone?</strong><cite><a href="https://www.timeanddate.com/time/time-zones.html" rel="external nofollow noopener noreferrer" target="_blank">timeanddate.com</a></cite></footer></blockquote>
-<p><small>(개인적으로 여러 위키, 블로그 등에서 설명하는 타임존보다 위 한 줄이 가장 깔끔하게 표현한 것 같다)</small></p>
-<h2 id="utc-vs-gmt"><a href="#UTC-vs-GMT" class="headerlink" title="UTC vs GMT"></a>UTC vs GMT</h2><p>GMT(Greenwich Mean Time)와 UTC는 같은 시간을 공유하고(동일하진 않고 초의 소숫점단위에서 차이가 난다) 혼용되서 사용되지만 기본적으로는 다르다.</p>
-<blockquote>
+<h2 id="타임존이란"><a href="#타임존이란" class="headerlink" title="타임존이란?"></a>타임존이란?</h2><p>타임존은 여러 가지 다른 것을 설명하는 데 사용할 수 있지만 대개 지역 또는 국가의 현지 시간을 나타내며, 주로 해당 국가에 의해 법적으로 지정된다.</p>
+<h2 id="utc-vs-gmt"><a href="#UTC-vs-GMT" class="headerlink" title="UTC vs GMT"></a>UTC vs GMT</h2><blockquote>
 <p>GMT is a <b>time zone</b> and UTC is a <b>time standard</b>.</p>
 </blockquote>
-<p><code>GMT</code>는 영국 런던 그리니치에 있는 왕립 천문대의 시간으로, 모든 시간대의 시작점을 나타낸다. 또한 일년내내 DST(Daylight Saving Time)의 영향을 받지 않는다.<br><code>UTC</code>(협정 세계시, 協定世界時)는 국제 표준시로 time-zone이 아니다. 즉, UTC를 공식적으로 현지 시간으로 사용하는 국가나 지역은 없다. 협정 세계시를 영어권에서는 Coordinated Universal Time(CUT)라고, 프랑스어권에서는 Temps Universel Coordonné(TUC)라고 하는데, 혼돈을 방지하기 위해서 공식적으로 UTC라고 정해졌다.</p>
-<h2 id="dstdaylight-saving-time"><a href="#DST-Daylight-Saving-time" class="headerlink" title="DST(Daylight Saving time)"></a>DST(Daylight Saving time)</h2><p><code>DST</code>는 자연 일광을 보다 잘 활용하기 위해서 여름철에 표준 시간에서 1시간 앞으로, 그리고 다시 가을에 시간을 1시간 전으로 설정하는 것을 말한다.<br>DST와 “summer time”은 같은 말을 뜻하며 특정 나라에서 주로 불린다. 영국에서 썸머타임이라고 많이 사용하며, DST가 적용되지 않는 표준시는 “winter time”이라고 사용되기도 한다. DST를 독일에서는 “sommerzeit”, 스칸디나비아에서는 “sommertid”라고도 사용한다.</p>
-<h2 id="time-zone-in-java8"><a href="#Time-Zone-in-Java8" class="headerlink" title="Time-Zone in Java8"></a>Time-Zone in Java8</h2><p>Time-Zone은 정부에 의해 변경되는 경우가 있는데, Java는 <a href="https://www.iana.org/time-zones" rel="external nofollow noopener noreferrer" target="_blank">IANA 데이터베이스</a>를 사용하고, 따로 버전업 없이 독립적으로 시간대 데이터베이스를 업데이트 한다. 즉, 하드코딩으로 관리하지 않아도 된다. 또한, Java8에서는 Time-Zone, DST를 좀 더 편하게 사용하기 위해 <code>ZoneId</code>, <code>ZonedDateTime</code>, <code>LocalDateTime</code> 등이 추가되었다.<br>이용할 수 있는 Time-Zone은 <code>ZoneId.getAvilableIds()</code>로 확인할 수 있으며, 현재 시점 등록된 ID는 600개이다.</p>
+<p>GMT와 UTC는 같은 시간을 공유하고(동일하진 않고 초의 소숫점단위에서 차이가 난다) 혼용되서 사용되지만 엄밀히 구분하자면 다르다.</p>
+<h4 id="gmtgreenwich-mean-time"><a href="#GMT-Greenwich-Mean-Time" class="headerlink" title="GMT(Greenwich Mean Time)"></a>GMT(Greenwich Mean Time)</h4><p>경도 0도에 위치한 영국 런던 그리니치에 있는 왕립 천문대의 시간으로, 모든 시간대의 시작점을 나타내며, 일년내내 DST(Daylight Saving Time)의 영향을 받지 않는다. GMT는 1925년 2월 5일부터 사용하기 시작했으며, 1972년 1월 1일까지 세계 표준시로 사용되었다.</p>
+<h4 id="utc"><a href="#UTC" class="headerlink" title="UTC"></a>UTC</h4><p>UTC(협정 세계시, 協定世界時)는 국제 표준시로 타임존이 아니다. 즉, UTC를 공식적으로 현지 시간으로 사용하는 국가나 지역은 없다. 협정 세계시를 영어권에서는 Coordinated Universal Time(CUT)라고, 프랑스어권에서는 Temps Universel Coordonné(TUC)라고 하는데, 혼돈을 방지하기 위해서 공식적으로 UTC라고 정해졌다.</p>
+<h2 id="dstdaylight-saving-time"><a href="#DST-Daylight-Saving-time" class="headerlink" title="DST(Daylight Saving time)"></a>DST(Daylight Saving time)</h2><p>DST는 자연 일광을 보다 잘 활용하기 위해서 여름철에 표준 시간에서 1시간 앞으로, 그리고 다시 가을에 시간을 1시간 전으로 설정하는 것을 말한다.<br>DST와 “summer time”은 같은 말을 뜻하며 특정 나라에서 주로 불린다. 영국에서 썸머타임이라고 많이 사용하며, DST가 적용되지 않는 표준시는 “winter time”이라고 사용되기도 한다. DST를 독일에서는 “sommerzeit”, 스칸디나비아에서는 “sommertid”라고도 사용한다.</p>
+<h2 id="java8의-타임존"><a href="#Java8의-타임존" class="headerlink" title="Java8의 타임존"></a>Java8의 타임존</h2><p>Time-Zone은 정부에 의해 변경되는 경우가 있는데, Java는 <a href="https://www.iana.org/time-zones" rel="external nofollow noopener noreferrer" target="_blank">IANA 데이터베이스</a>를 사용하고, 따로 버전업 없이 독립적으로 시간대 데이터베이스를 업데이트 한다. 즉, 하드코딩으로 관리하지 않아도 된다. 또한, Java8에서는 타임존, DST를 좀 더 편하게 사용하기 위해 <code>ZoneId</code>, <code>ZonedDateTime</code>, <code>LocalDateTime</code> 등이 추가되었다.<br>이용할 수 있는 Time-Zone은 <code>ZoneId.getAvilableIds()</code>로 확인할 수 있으며, 현재 시점 등록된 ID는 600개이다.</p>
 <table>
 <thead>
 <tr>
@@ -39,8 +38,8 @@
 </tr>
 </tbody>
 </table>
-<p>아래는 Time-Zone 관련된 몇 가지 예제이다.</p>
-<h4 id="사용자에게-time-zoneoffset을-표시할-때-어떻게-보여줄-것인가"><a href="#사용자에게-Time-Zone-offset-을-표시할-때-어떻게-보여줄-것인가" class="headerlink" title="사용자에게 Time-Zone(+offset)을 표시할 때 어떻게 보여줄 것인가?"></a>사용자에게 Time-Zone(+offset)을 표시할 때 어떻게 보여줄 것인가?</h4><p>예를 들어, Time-Zone을 <code>GMT+09:00 Seoul</code> 형식에 맞게 출력하려고 한다.</p>
+<p>아래는 타임존 관련된 몇 가지 예제이다.</p>
+<h4 id="사용자에게-타임존offset을-표시할-때-어떻게-보여줄-것인가"><a href="#사용자에게-타임존-offset-을-표시할-때-어떻게-보여줄-것인가" class="headerlink" title="사용자에게 타임존(+offset)을 표시할 때 어떻게 보여줄 것인가?"></a>사용자에게 타임존(+offset)을 표시할 때 어떻게 보여줄 것인가?</h4><p>예를 들어, 타임존을 <code>GMT+09:00 Seoul</code> 형식에 맞게 출력하려고 한다.</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 현재 시간 기준(2018/03/21)</span></div><div class="line"><span class="keyword">final</span> List&lt;ZoneId&gt; timeZones = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">timeZones.add(ZoneId.of(<span class="string">"America/Santiago"</span>));</div><div class="line">timeZones.add(ZoneId.of(<span class="string">"Asia/Seoul"</span>));</div><div class="line">timeZones.add(ZoneId.of(<span class="string">"Australia/Sydney"</span>));</div><div class="line"></div><div class="line">timeZones.forEach(zoneId -&gt; &#123;</div><div class="line">    <span class="keyword">final</span> ZoneOffset offset = zoneId.getRules().getStandardOffset(Instant.now());</div><div class="line">    System.out.println(String.format(<span class="string">"GMT%s %s"</span>, offset.getId(), zoneId.getId().split(<span class="string">"/"</span>)[<span class="number">1</span>]));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">GMT-04:00 Santiago</div><div class="line">GMT+09:00 Seoul</div><div class="line">GMT+10:00 Sydney</div></pre></td></tr></table></figure>
 <p>위 코드에는 한 가지 이슈가 있다. 현재 시점(2018년 2월 21일)에 Santiago는 DST가 시행중으로 offset은 1시간 당긴 <code>-03:00</code>이다. 하지만, <code>getStandardOffset()</code>은 표준 오프셋을 가져오므로 <code>-04:00</code>를 출력한다(Sydney도 동일하다). 아래와 같이 <code>offset</code>을 선언하면 DST가 적용된 offset을 가져올 수 있다.</p>
@@ -72,27 +71,18 @@
 <p>만약 <code>Duration</code>을 사용했다면 Santiago의 DST가 적용되지 잘못된 시간에 회의를 예약하게 된다.</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">final</span> ZonedDateTime nextMeeting = now.plus(Duration.ofDays(<span class="number">7</span>));</div><div class="line">System.out.println(nextMeeting);</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">2018-05-17T09:00-04:00[America/Santiago]</div></pre></td></tr></table></figure>
-<h2 id="references"><a href="#References" class="headerlink" title="References"></a>References</h2><p><strong>Time-Zone</strong></p>
-<ul>
-<li><a href="https://www.timeanddate.com/time/time-zones.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/time-zones.html</a></li>
-<li><a href="https://ko.wikipedia.org/wiki/%EC%8B%9C%EA%B0%84%EB%8C%80" rel="external nofollow noopener noreferrer" target="_blank">https://ko.wikipedia.org/wiki/%EC%8B%9C%EA%B0%84%EB%8C%80</a></li>
-</ul>
-<p><strong>UTC vs GMT</strong></p>
-<ul>
-<li><a href="https://greenwichmeantime.com/what-is-gmt/" rel="external nofollow noopener noreferrer" target="_blank">https://greenwichmeantime.com/what-is-gmt/</a></li>
-<li><a href="https://www.timeanddate.com/time/gmt-utc-time.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/gmt-utc-time.html</a></li>
-<li><a href="https://community.akamai.com/groups/korea-user-group/blog/2015/06/30/gmt-vs-utc" rel="external nofollow noopener noreferrer" target="_blank">https://community.akamai.com/groups/korea-user-group/blog/2015/06/30/gmt-vs-utc</a></li>
-<li><a href="https://www.timeanddate.com/time/utc-abbreviation.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/utc-abbreviation.html</a></li>
-</ul>
-<p><strong>DST</strong></p>
-<ul>
-<li><a href="https://www.timeanddate.com/time/dst/" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/dst/</a></li>
-<li><a href="https://www.timeanddate.com/time/dst/summer-time.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/dst/summer-time.html</a></li>
-</ul>
-<p><strong>Time-Zone in Java8</strong></p>
-<ul>
-<li><a href="https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html" rel="external nofollow noopener noreferrer" target="_blank">https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html</a></li>
-<li><a href="http://d2.naver.com/helloworld/645609" rel="external nofollow noopener noreferrer" target="_blank">http://d2.naver.com/helloworld/645609</a></li>
+<h2 id="참조-링크"><a href="#참조-링크" class="headerlink" title="참조 링크"></a>참조 링크</h2><ul>
+<li>timeanddate - What is a Time Zone?: <a href="https://www.timeanddate.com/time/time-zones.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/time-zones.html</a></li>
+<li>위키피디아 - 시간대: <a href="https://ko.wikipedia.org/wiki/시간대" rel="external nofollow noopener noreferrer" target="_blank">https://ko.wikipedia.org/wiki/시간대</a></li>
+<li>: <a href="https://greenwichmeantime.com/what-is-gmt/" rel="external nofollow noopener noreferrer" target="_blank">https://greenwichmeantime.com/what-is-gmt/</a></li>
+<li>: <a href="https://www.timeanddate.com/time/gmt-utc-time.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/gmt-utc-time.html</a></li>
+<li>: <a href="https://community.akamai.com/groups/korea-user-group/blog/2015/06/30/gmt-vs-utc" rel="external nofollow noopener noreferrer" target="_blank">https://community.akamai.com/groups/korea-user-group/blog/2015/06/30/gmt-vs-utc</a></li>
+<li>: <a href="https://www.timeanddate.com/time/utc-abbreviation.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/utc-abbreviation.html</a></li>
+<li>: <a href="https://www.timeanddate.com/time/dst/" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/dst/</a></li>
+<li>: <a href="https://www.timeanddate.com/time/dst/summer-time.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.timeanddate.com/time/dst/summer-time.html</a></li>
+<li>: <a href="https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html" rel="external nofollow noopener noreferrer" target="_blank">https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html</a></li>
+<li>: <a href="http://d2.naver.com/helloworld/645609" rel="external nofollow noopener noreferrer" target="_blank">http://d2.naver.com/helloworld/645609</a></li>
+<li>Toast - 자바스크립트에서 타임존 다루기 (1): <a href="http://meetup.toast.com/posts/125" rel="external nofollow noopener noreferrer" target="_blank">http://meetup.toast.com/posts/125</a></li>
 </ul>
 </div></article></div><div class="addthis_inline_share_toolbox"></div><div class="ad"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins style="display:block" data-ad-client="ca-pub-2402079508512433" data-ad-slot="9218385844" data-ad-format="auto" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></main><footer><div class="paginator"><a href="/2018/02/21/shell-script-cook-book/" class="prev">PREV</a><a href="/2018/02/05/optional-orelse-orelseget/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'wicksome';
 var disqus_identifier = '2018/02/20/time-zone-with-java8/';
